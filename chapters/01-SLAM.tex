@@ -2,9 +2,11 @@
 
 \chapter{SLAM\authorA}
 
-\section{What is a SLAM?}
-Basically a SLAM (\textbf{S}imultaneous \textbf{L}ocalization \textbf{A}nd \textbf{M}apping) is the computational problem of creating and updating a map from an unknown environment whilst tracking the position of the robot using the map. This problem is thus a chicken-and-egg problem because neither the map or location are known, and have to be estimated at the same time. Cameras, Ultrasonic sensors and lidar sensors are most commonly used for fetching the 2d and 3d data of the robot's surroundings. \newline
-There are several algorithms out there, which try to solve this problem using algorithms and some even deep learning. Mostly they achieve an approximate map, which is done in a reasonable time span. Many popuplar SLAM-algorithms use methods that include \textit{particle filters}, \textit{extended Kalman filter} and \textit{Covariance intersection} \cite{1678144} \cite{slamfordummies}. \newline
+\section{What is SLAM?}
+SLAM is an acronym and stands for \textbf{S}iultaneous \textbf{L}ocalization \textbf{A}nd \textbf{M}apping.
+\emph{\glqq SLAM is concerned with the problem of building a map of an unknown environment by a mobile robot while at the same time navigating the environment using the map. .\grqq}~\cite{slamfordummies} \newline
+This problem is thus a chicken-and-egg problem because neither the map or location are known, and have to be estimated at the same time. Cameras, Ultrasonic sensors and lidar sensors are most commonly used for fetching the 2d and 3d data of the robot's surroundings. \newline
+There are several algorithms out there, which try to solve this problem using algorithms and some even deep learning. Mostly they achieve an approximate map, which is done in a reasonable time span. Many popular SLAM-algorithms use methods that include \textit{particle filters}, \textit{extended Kalman filter} and \textit{Covariance intersection}\cite{slamfordummies} \cite{1678144}. \newline
 
 % Application environments of SLAMs
 \section{Application}
