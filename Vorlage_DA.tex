@@ -1,0 +1,184 @@
+\documentclass[11pt, oneside, numbers=noenddot]{scrbook}   		% Allgemeine Schriftgröße, Dokumententyp
+\input{./includes/htl_definintions.tex}		% Formatierung der Dokuments, Diverse Befehle
+
+
+%	########################################################
+% 					Allgemeine Informationen			
+%	########################################################
+
+% Titel der Arbeit:
+\def\htlArbeitsthema{Autonomous Car Mapping and Tracking}	
+
+% Initialen der Authoren
+\def\authorInitialsA{AV} % Alexander Voglsperger
+\def\authorInitialsB{SM} % Simon Moharitsch
+
+% Die Initialen werden verwendet um anzuzeigen wer welches Kapitel
+% erstellt hat.
+
+% Die Befehle \authorA - \authorB werden in den Kapitelüberschriften angefügt
+\def\authorA{\textmd{\textsuperscript{\authorInitialsA}}}
+\def\authorB{\textmd{\textsuperscript{\authorInitialsB}}}
+\def\authorC{\textmd{\textsuperscript{\authorInitialsC}}}
+\def\authorD{\textmd{\textsuperscript{\authorInitialsD}}}
+
+
+
+%	########################################################
+
+\begin{document}
+
+%	########################################################
+% 						Einleitung			
+%	########################################################
+\pagenumbering{roman}	% Beginn mit römischen Seitenzahlen
+
+%	--------------------------------------------------------
+% 	Deckblatt
+%	--------------------------------------------------------			
+\input{./chapters/Pre-01-deckblatt.tex}
+
+%	--------------------------------------------------------
+% 	Arbeitstitel
+%	--------------------------------------------------------		
+\input{./chapters/Pre-02-arbeitstitel.tex}
+
+%	--------------------------------------------------------
+% 	Eidesstattliche Erklärung
+%	--------------------------------------------------------			
+\input{./chapters/Pre-03-erklaerung.tex}
+
+%	--------------------------------------------------------
+% 	Inhaltsverzeichnis
+%	--------------------------------------------------------			
+\tableofcontents
+
+%	--------------------------------------------------------
+% 	Vorwort
+%	--------------------------------------------------------	
+\input{./chapters/Pre-04-vorwort.tex}
+
+%	--------------------------------------------------------
+% 	Zusammenfassung
+%	--------------------------------------------------------		
+\input{./chapters/Pre-05-kurzfassung.tex}
+
+\pagebreak
+\pagenumbering{arabic}	% Beginn mit arabischen Seitenzahlen
+
+%	########################################################
+%
+% 						Arbeit	
+%
+%   Diesen Abschnitt an die eigenen Erfodernisse anpassen.		
+%
+%
+%	########################################################
+
+%	--------------------------------------------------------
+% 	INFO: General Information for SLAMS
+%	-------------------------------------------------------		
+\input{./chapters/01-SLAM.tex}
+
+%	--------------------------------------------------------
+% 	INFO: General information about artificial neural networks
+%	-------------------------------------------------------	
+\input{./chapters/02-Artificial-Neural-Network.tex}
+
+%	--------------------------------------------------------
+% 	INFO: General information about artificial neural networks
+%	-------------------------------------------------------	
+\input{./chapters/03-Robot-Operating-System.tex}
+
+%	--------------------------------------------------------
+% 	INFO: Gliederung und Allgemeines
+%	-------------------------------------------------------	
+\input{./chapters/Info-01-gliederung} 	% Nur zur Info
+
+%	--------------------------------------------------------
+% 	INFO: Zitieren, Abbildungen, Listing
+%	-------------------------------------------------------	
+\input{./chapters/Info-02-beispiele} 	% Nur zur Info
+
+%	--------------------------------------------------------
+% 	Aufgabenstellung / Pflichtenheft
+%	--------------------------------------------------------		
+\input{./chapters/01-aufgabenstellung.tex}
+
+%	--------------------------------------------------------
+% 	Entwurf
+%	--------------------------------------------------------	
+\input{./chapters/02-entwurf.tex}
+
+%	--------------------------------------------------------
+% 	Implementierung
+%	--------------------------------------------------------	
+\input{./chapters/03-implementierung.tex}
+
+%	--------------------------------------------------------
+% 	Test und Inbetriebnahme
+%	--------------------------------------------------------	
+\input{./chapters/04-test.tex}
+
+%	--------------------------------------------------------
+% 	Bedienungsanleitung
+%	--------------------------------------------------------
+\input{./chapters/05-bedienungsanleitung.tex}
+
+%	--------------------------------------------------------
+% 	Fazit und Persönliche Erfahrungen
+%	--------------------------------------------------------
+\input{./chapters/06-fazit.tex}
+
+
+%	########################################################
+% 	Anhang		
+%	########################################################
+\appendix
+
+%	--------------------------------------------------------
+% 	Diverse Anhänge
+%	--------------------------------------------------------
+\input{./chapters/App-01-anhaenge.tex}	
+
+%	--------------------------------------------------------
+% 	LaTeX
+%	--------------------------------------------------------	
+\input{./chapters/App-02-latex.tex}
+
+%	--------------------------------------------------------
+% 	Abschließende Prüfungen - Diplomarbeit
+%	--------------------------------------------------------	
+\input{./chapters/App-03-richtlinien.tex}
+
+
+%	########################################################
+% 	Quellenverzeichnis 		
+%	########################################################
+% \addcontentsline{toc}{chapter}{Literaturverzeichnis}
+\bibliography{literature.bib} 
+\bibliographystyle{ieeetr}
+
+\input{./chapters/Post-01-literatur.tex}
+
+
+%	########################################################
+% 	Abbildungsverzeichnis 		
+%	########################################################
+\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}
+\listoffigures
+
+%	########################################################
+% 	Verzeichnis der Listings 		
+%	########################################################
+\addcontentsline{toc}{chapter}{Quelltextverzeichnis}
+\lstlistoflistings
+
+%	--------------------------------------------------------
+% 	Autoren
+%	--------------------------------------------------------
+\input{./chapters/Post-02-autoren.tex}
+
+
+
+\end{document}  
