@@ -13,7 +13,7 @@
 
 
 \documentclass[11pt, oneside, numbers=noenddot]{scrbook}   		% Allgemeine Schriftgröße, Dokumententyp
-\input{./includes/htl_definintions.tex}		% Formatierung der Dokuments, Diverse Befehle
+\input{./media/includes/htl_definintions.tex}		% Formatierung der Dokuments, Diverse Befehle
 
 
 %	########################################################
@@ -33,8 +33,6 @@
 % Die Befehle \authorA - \authorB werden in den Kapitelüberschriften angefügt
 \def\authorA{\textmd{\textsuperscript{\authorInitialsA}}}
 \def\authorB{\textmd{\textsuperscript{\authorInitialsB}}}
-\def\authorC{\textmd{\textsuperscript{\authorInitialsC}}}
-\def\authorD{\textmd{\textsuperscript{\authorInitialsD}}}
 
 
 
@@ -50,17 +48,17 @@
 %	--------------------------------------------------------
 % 	Deckblatt
 %	--------------------------------------------------------			
-\input{./chapters/Pre-01-deckblatt.tex}
+\input{./chapters/1_Pre/Pre-01-deckblatt.tex}
 
 %	--------------------------------------------------------
 % 	Arbeitstitel
 %	--------------------------------------------------------		
-\input{./chapters/Pre-02-arbeitstitel.tex}
+\input{./chapters/1_Pre/Pre-02-arbeitstitel.tex}
 
 %	--------------------------------------------------------
 % 	Eidesstattliche Erklärung
 %	--------------------------------------------------------			
-\input{./chapters/Pre-03-erklaerung.tex}
+\input{./chapters/1_Pre/Pre-03-erklaerung.tex}
 
 %	--------------------------------------------------------
 % 	Inhaltsverzeichnis
@@ -70,12 +68,12 @@
 %	--------------------------------------------------------
 % 	Vorwort
 %	--------------------------------------------------------	
-\input{./chapters/Pre-04-vorwort.tex}
+\input{./chapters/1_Pre/Pre-04-vorwort.tex}
 
 %	--------------------------------------------------------
 % 	Zusammenfassung
 %	--------------------------------------------------------		
-\input{./chapters/Pre-05-kurzfassung.tex}
+\input{./chapters/1_Pre/Pre-05-kurzfassung.tex}
 
 \pagebreak
 \pagenumbering{arabic}	% Beginn mit arabischen Seitenzahlen
@@ -92,44 +90,49 @@
 %	--------------------------------------------------------
 % 	INFO: General Information for SLAMS
 %	-------------------------------------------------------		
-\input{./chapters/01-SLAM.tex}
+\input{./chapters/2_Arbeit/01-SLAM.tex}
+
+%	--------------------------------------------------------
+% 	INFO: General information about the Robot Operating System
+%	-------------------------------------------------------	
+\input{./chapters/2_Arbeit/02-Robot-Operating-System.tex}
 
 %	--------------------------------------------------------
 % 	INFO: General information about artificial neural networks
-%	-------------------------------------------------------	
-\input{./chapters/02-Artificial-Neural-Network.tex}
-
-%	--------------------------------------------------------
-% 	INFO: General information about artificial neural networks
-%	-------------------------------------------------------	
-\input{./chapters/03-Robot-Operating-System.tex}
+%	-------------------------------------------------------		
+\input{./chapters/2_Arbeit/04-Artificial-Neural-Network.tex}
 
 
 %	--------------------------------------------------------
 % 	ORB-SLAM
 %	--------------------------------------------------------		
-\input{./chapters/04-ORB-SLAM.tex}
+\input{./chapters/2_Arbeit/05-ORB-SLAM.tex}
 
 %	--------------------------------------------------------
-% 	ORB-SLAM
+% 	LSD-SLAM
 %	--------------------------------------------------------		
-\input{./chapters/05-LSD-SLAM.tex}
+\input{./chapters/2_Arbeit/06-LSD-SLAM.tex}
+
+%	--------------------------------------------------------
+% 	Deep TAM
+%	--------------------------------------------------------		
+\input{./chapters/2_Arbeit/07-DEEP-TAM.tex}
 
 %	--------------------------------------------------------
 % 	INFO: Gliederung und Allgemeines
 %	-------------------------------------------------------	
-\input{./chapters/Info-01-gliederung} 	% Nur zur Info
+\input{./chapters/BSP/Info-01-gliederung} 	% Nur zur Info
 
 %	--------------------------------------------------------
 % 	INFO: Zitieren, Abbildungen, Listing
 %	-------------------------------------------------------	
-\input{./chapters/Info-02-beispiele} 	% Nur zur Info
+\input{./chapters/BSP/Info-02-beispiele} 	% Nur zur Info
 
 
 %	--------------------------------------------------------
 % 	Fazit und Persönliche Erfahrungen
 %	--------------------------------------------------------
-\input{./chapters/06-fazit.tex}
+\input{./chapters/2_Arbeit/08-fazit.tex}
 
 
 %	########################################################
@@ -140,12 +143,12 @@
 %	--------------------------------------------------------
 % 	LaTeX
 %	--------------------------------------------------------	
-\input{./chapters/App-02-latex.tex}
+\input{./chapters/BSP/App-02-latex.tex}
 
 %	--------------------------------------------------------
 % 	Abschließende Prüfungen - Diplomarbeit
 %	--------------------------------------------------------	
-\input{./chapters/App-03-richtlinien.tex}
+\input{./chapters/3_Post/App-03-richtlinien.tex}
 
 
 %	########################################################
@@ -171,7 +174,7 @@
 %	--------------------------------------------------------
 % 	Autoren
 %	--------------------------------------------------------
-\input{./chapters/Post-02-autoren.tex}
+\input{./chapters/3_Post/Post-02-autoren.tex}
 
 
 
