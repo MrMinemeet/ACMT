@@ -68,7 +68,7 @@ b% Arten https://de.wikibooks.org/wiki/LaTeX-Kompendium:_Zitieren_mit_BibTeX
     YEAR         = "2019",
     HOWPUBLISHED = "Techapeek",
     NOTE    = "\url{https://tinyurl.com/y5yajv5u}"
- }
+ }hg
  
  % areverie SLAM
  @MISC{arreverie,
@@ -104,7 +104,7 @@ b% Arten https://de.wikibooks.org/wiki/LaTeX-Kompendium:_Zitieren_mit_BibTeX
 }
 
 % DVO-SLAM
-@inproceedings{dvoslam,
+@inproceedings{dvoslam1,
     author={F. Steinbruecker and J. Sturm and D. Cremers},
     title={Real-Time Visual Odometry from Dense RGB-D Images},
     booktitle={Workshop on Live Dense Reconstruction with Moving Cameras at the Intl. Conf. on Computer Vision (ICCV)},
@@ -149,7 +149,7 @@ b% Arten https://de.wikibooks.org/wiki/LaTeX-Kompendium:_Zitieren_mit_BibTeX
 }
 
 % LSD-SLAM
-@inproceedings{lsdslam,
+@inproceedings{dvoslam,
 author={J. Engel and J. Sturm and D. Cremers},
 title={Semi-Dense Visual Odometry for a Monocular Camera},
 year= {2013},
@@ -278,4 +278,26 @@ award = {Best Short Paper Award}
     Year        = "2020",
     Publisher   = "MathWorlds",
     Note        = "http://mathworuld.wolfram.com/Levenberg-MarquardtMethod.html"
+}
+
+@string{eccv="European Conference on Computer Vision (ECCV)"}
+@inproceedings{lsdslam_eccv,
+    author      = "J. Engel and T. Schops and D. Cremers",
+    title       = "LSD-SLAM: Large-Scale Direct Monocular SLAM",
+    year        = "2014",
+    month       = "September",
+    booktitle   = eccv,
+    keywords    = "rgb-d, monocular, slam, semidense, lsdslam",
+    award       = "Oral Presentation",
+    Note        = "https://vision.in.tum.de/research/vslam/lsdslam?redirect=1"
+}
+
+% Pose-Graph-Optimization
+@inproceedings{posegraphoptimization,
+       author="Edwin Olson and John Leonard and Seth Teller",
+       title="Fast Iterative Optimization of Pose Graphs with Poor Initial Estimates",
+       journal = {ICRA},
+       institution = {MIT CSAIL},
+       year = {2006},
+	pages="2262-2269"
 }

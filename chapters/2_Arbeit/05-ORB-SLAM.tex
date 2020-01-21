@@ -1,10 +1,18 @@
 % Discription of what ORB-SLAM is, how it works and implementation
 
-\chapter{ORB-SLAM2\authorA}
+\chapter{ORB-SLAM2\authorA}\label{ref:orbslam}
 
 \section{What is ORB-SLAM?}
 ORB-SLAM2 is a versatile, real-time SLAM implementation which uses Mono-, Stereo- and RGB-D cameras. It's designed to generate a 3D map from prominent points in the picture and keypoints. It features loop closing, re-localization and a reusable map.\cite{orbslam2} It works in a wide variety of use cases. The SLAM can be used on a small hand-held camera or drones up to self driving cars.
-ORB-SLAM2 is based on ORB-SLAM and was inter alia developed by Raúl Mur-Artal who already worked on ORB-SLAM.
+ORB-SLAM2 is based on ORB-SLAM and was inter alia developed by Raúl Mur-Artal who already worked on ORB-SLAM.\\
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{./media/images/orb-slam-kitti-dataset.png}
+  	\caption{ORB-SLAM Example image
+  	\\Source: \url{https://tinyurl.com/ruvnj39}}
+  	\label{rosstructure}
+\end{figure}
 
 \section{How does the ORB-SLAM work?}
 
@@ -34,4 +42,4 @@ Matching the current points with the one on the map will ensure that it is drift
 
 \subsection{Input/Output}
 \textbf{Input Data:} rectified Monochrome/Color images\newline
-\textbf{Output Data:} Rough 3D map with keypoints and keyframes and image with current prominent points
+\textbf{Output Data:} Rough 3D map with pixel-points and image with current prominent keypoints
