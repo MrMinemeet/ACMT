@@ -3,8 +3,8 @@
 \chapter{ORB-SLAM2\authorA}\label{ref:orbslam}
 
 \section{What is ORB-SLAM?}
-ORB-SLAM2 is a versatile, real-time SLAM implementation which uses Mono-, Stereo- and RGB-D cameras. It's designed to generate a 3D map from prominent points in the picture and keypoints. It features loop closing, re-localization and a reusable map.\cite{orbslam2} It works in a wide variety of use cases. The SLAM can be used on a small hand-held camera or drones up to self driving cars.
-ORB-SLAM2 is based on ORB-SLAM and was inter alia developed by Raúl Mur-Artal who already worked on ORB-SLAM.\\
+ORB-SLAM2 is a versatile, real-time SLAM implementation which uses Mono-, Stereo- and RGB-D cameras. It's designed to generate a 3D map from prominent points in the picture and keypoints. It features loop closing, re-localization and a reusable map \cite{orbslam2}. It works in a wide variety of use cases. The SLAM can be used on a small hand-held camera or drones up to self driving cars.
+ORB-SLAM2 is based on ORB-SLAM and was inter alia developed by Raúl Mur-Artal who already worked on ORB-SLAM.\newline
 
 \begin{figure}[h]
 	\centering
@@ -33,12 +33,12 @@ This is how finding these keypoints works on different camera types:
 \subsection{Loop-closing and Bundle Adjustments}
 Loop-closing and bundle adjustments are performed in two steps. First the loop-closing will happen when the system detects overlapping environments where the system changes scaling to reconnect certain parts as scale drifting will occur on monocular cameras.\newline
 Second step is the bundle adjustment, which gets executed after a successful loop-closing, where the system tries to optimize all keypoints and keyframes using the Levenberg-Marquardt method (alternative to Gauss-Newton method).\cite{LevenbergMarquardMethod} Also the camera orientation and position will be optimized to compensate errors in tracking. All the bundle adjustment is done in a separate thread since this is a heavier task.\newline
-When finished, the updated and optimized keyframes and keypoints get merged into the original keyframes and keypoints.\cite{orbslam2}
+When finished, the updated and optimized keyframes and keypoints get merged into the original keyframes and keypoints \cite{orbslam2}.
 
 \subsection {Localization}
 When a area has been mapped well in the past the \textit{Localization Mode} can be turned on which deactivates the Local Mapping and the Loop Closing thread and this saving computing power.
 Locating is done by continuously comparing the previous points with the current points of the image. This works when an area is unmapped but drifting might add up.
-Matching the current points with the one on the map will ensure that it is drift-free.\cite{orbslam2}
+Matching the current points with the one on the map will ensure that it is drift-free \cite{orbslam2}.
 
 \subsection{Input/Output}
 \textbf{Input Data:} rectified Monochrome/Color images\newline

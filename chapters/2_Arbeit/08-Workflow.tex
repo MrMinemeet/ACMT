@@ -1,1 +1,17 @@
-\chapter{Workflow\authorB}
+\chapter{Workflow}
+
+\section{Used Hardware\authorA}
+For video capturing a \textit{Raspberry Pi 3B+} with a \textit{Raspberry Pi Camera V2} are used. The Raspberry Pi sends the video feed to a separate more power full PC over WiFi using a Python3 script. \newline
+For processing a \textit{Lenovo ThinkStation S20} or a \textit{Lenovo W550s} are used depending on the amount of processing power is required. For more intense work a server access at the Johannes Kepler University was supplied to work on their system. \newline
+As the work is based around implementing it on the AADC car a remote controlled model car was borrowed for a few weeks.
+
+\section{Used Software\authorA}
+\subsection{Raspberry Pi}
+The Raspberry Pi is running Raspbian Buster since it is well optimized for the mini computer and only required to be able to execute a Python script to send the raw video feed over http to the the processing device.
+\subsection{PC}
+\textbf{\underline{ADTF}} \newline
+At first Ubuntu 16.04 with ADTF was used since it's the recommended environment by the AADC car manufacturer DigitalWerk. There were many compatibility ans stability issues and it is very difficult to get into the whole system as it's not very beginner friendly. Students at the JKU said that they spent at least four weeks to know how it somewhat worked.
+
+\textbf{\underline{ROS}} \newline
+The ThinkStation and the laptop are running Kubuntu 18.04, which is a modified version of Ubuntu, since ROS is supported the best when using Ubuntu and the GUI is very similar to Windows. On these devices ROS Melodic is running as it is primarily targeted for Ubuntu 18.04 and is supported until May 2023.
+

@@ -3,15 +3,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
 \documentclass[11pt, oneside, numbers=noenddot]{scrbook}   		% Allgemeine Schriftgröße, Dokumententyp
 \input{./media/includes/htl_definintions.tex}		% Formatierung der Dokuments, Diverse Befehle
 
@@ -34,6 +25,10 @@
 \def\authorA{\textmd{\textsuperscript{\authorInitialsA}}}
 \def\authorB{\textmd{\textsuperscript{\authorInitialsB}}}
 
+\makeglossaries
+ 
+% Glossaries
+\input{./chapters/2_Arbeit/10-Glossaries.tex}
 
 
 %	########################################################
@@ -141,7 +136,6 @@
 %	--------------------------------------------------------
 \input{./chapters/2_Arbeit/09-fazit.tex}
 
-
 %	########################################################
 % 	Anhang		
 %	########################################################
@@ -156,6 +150,12 @@
 % 	Abschließende Prüfungen - Diplomarbeit
 %	--------------------------------------------------------	
 \input{./chapters/3_Post/App-03-richtlinien.tex}
+
+
+%	########################################################
+% 	Erklärungen 		
+%	########################################################
+\printglossary
 
 
 %	########################################################

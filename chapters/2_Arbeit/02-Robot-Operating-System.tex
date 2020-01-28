@@ -6,7 +6,7 @@
 The Robot Operating System, which is also known as ROS, is a flexible framework for writing software that gets utilized on robots. It was founded by Willow Garage in 2012 and gets primarily maintained by the Open Source Robotics Foundation (OSRF) \cite{osrf}. In Europe the project gets coordinated by the Fraunhofer IPA in form of the \textit{ROS Industrial Consortium Europe}. ROS is a middle-ware which is not a operating system but provides services that manage hardware abstraction, low-level device control, message-passing between processes and package management. \emph{\glqq It is a collection of tools, libraries, and conventions that aim to simplify the task of creating complex and robust robot behavior across a wide variety of robotic platforms.\grqq}~\cite{aboutros}
 
 \section{Design}
-The processes of ROS are represented in nodes which are in a graph structure. Everything gets managed by a single process called \textit{ROS Master}, to whom all other nodes register on startup. But instead of sending all of the messages over the master, the master sets up a peer-to-peer connection between the nodes. This decentralized architecture is helpful as many robots consists of many computer hardware which is connected via a network and are likely to transfer big messages. \cite{rosoneoone}   \\
+The processes of ROS are represented in nodes which are in a graph structure. Everything gets managed by a single process called \textit{ROS Master}, to whom all other nodes register on startup. But instead of sending all of the messages over the master, the master sets up a peer-to-peer connection between the nodes. This decentralized architecture is helpful as many robots consists of many computer hardware which is connected via a network and are likely to transfer big messages \cite{rosoneoone}. \newline
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.7\textwidth]{./media/images/ros_structure.jpg}
@@ -24,7 +24,7 @@ A node, which represent a single running process, can provide data using a match
 \section{Licenses and OS}
 The language-independent tools and the main client libraries have men released under the BSD license and as such they are open source software for commercial and research use. The majority of 3rd party packages are released under several other open-source licenses.\newline
 The ROS libraries are geared toward a UNIX-System which is mainly due to their dependence on a large collection of open source software and libraries.
-For example \textit{Ubuntu} is in the list of supported operating systems, while others like \textit{Fedora, MacOS and Windows} are "experimental" and are mainly supported by the community.
+For example \textit{Ubuntu} is in the list of supported operating systems, while others like \textit{Fedora, MacOS and Windows} are \enquote{experimental} and are mainly supported by the community \cite{isrosforme}.
 
 \section{Tools}
 One of the core functionalities that ROS provides are the tools which allow the developers to visualize 2D and 3D data, record data, easily navigating ROS packages, creating complex scripts that configure and setup processes. Thanks to this tools it simplifies and provides solution for common robotic development.
@@ -45,7 +45,7 @@ RQt provides a graphical overview of the ROS computation graph. It shows the nod
 Catkin is the newer ROS build system, which compiles the files in the source folder. It is based on CMake and is cross-platform and language-independent as most other ROS tools.
 
 \subsection{Rviz}
-A visualizer for three-dimensional data where robots, environments and sensor information can be visualized. It is highly customise able with display many types of visualisation and plugin support. \\
+A visualizer for three-dimensional data where robots, environments and sensor information can be visualized. It is highly customise able with display many types of visualisation and plugin support. \newline
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.7\textwidth]{./media/images/rviz}
