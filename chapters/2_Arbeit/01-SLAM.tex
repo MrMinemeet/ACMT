@@ -4,42 +4,42 @@
 
 \section{What is SLAM?}
 \gls{slam} is an acronym and stands for \textbf{S}iultaneous \textbf{L}ocalisation \textbf{A}nd \textbf{M}apping.
-\emph{\glqq SLAM is concerned with the problem of building a map of an unknown environment by a mobile robot while at the same time navigating the environment using the map.\grqq}~\cite{slamfordummies} \newline
-This problem is thus a chicken-and-egg problem because neither the map or location are known, and have to be estimated at the same time. Cameras, ultrasonic sensors and laser radar sensors are most commonly used for fetching the 2D and 3D data of the robot's surroundings \cite{arreverie}. \newline
+\emph{\enquote{\gls{slam} is concerned with the problem of building a map of an unknown environment by a mobile robot while at the same time navigating the environment using the map.}} \cite{slamfordummies} \newline
+This problem is thus a chicken-and-egg problem because neither the map or location are known, and have to be estimated at the same time. Cameras, ultrasonic sensors and laser radar (\gls{lidar}) sensors are most commonly used for fetching the 2D and 3D data of the robot's surroundings \cite{arreverie}. \newline
 There are several algorithms out there, which try to solve this problem using algorithms and some even deep learning. Mostly they achieve an approximate map, which is done in a reasonable time span. Many popular SLAM-algorithms use methods that include \textit{particle filters}, \textit{extended Kalman filter} and \textit{Covariance intersection}\cite{slamfordummies} \cite{1678144}. \newline
 
 % Application environments of SLAMs
 \section{Application}
-The biggest selling point for using SLAM implementations is pretty simple. Many places where autonomous robots may be required don't have good enough maps that are up-to-date , if the exist at all or it might be in an environment where positioning for instance GPS can't be used properly \cite{techapeekslam}. If slams weren't be used then someone would have to go to the place and make a map. This would delay the mission and add to the costs. \newline
+The biggest selling point for using \gls{slam} implementations is pretty simple. Many places where autonomous robots may be required don't have good enough maps that are up-to-date , if the exist at all or it might be in an environment where positioning for instance GPS can't be used properly \cite{techapeekslam}. If slams weren't be used then someone would have to go to the place and make a map. This would delay the mission and add to the costs. \newline
 With a robot, that is capable of using a SLAM method to detect and locate itself in the unknown surroundings this wouldn't be an issue. The robot could go in, generate a map that updates itself and use it to navigate around. \newline
 Existing approaches that are used are in self-driving cars, unmanned aerial vehicles, autonomous underwater vehicles, planetary rovers and newer domestic robots.
 
 % History of slams
 \section{History}
-The decisive work in SLAMS was tone in the research by R.C. Smith and P. Cheeseman who worked on the representation and estimation of spatial uncertainty in 1986. Another major work in this area was done by a research group with the head being \textit{Hough F. Durrant-Whyte}. Durrant-Wyhte and his group showed that answer to SLAMS lies in the nearly infinite amount of data that can be used. This lead to the motivation of finding algorithms which are trackable and approximate in a time realistic manner.\newline
+The decisive work in \gls{slam}s was tone in the research by R.C. Smith and P. Cheeseman who worked on the representation and estimation of spatial uncertainty in 1986. Another major work in this area was done by a research group with the head being \textit{Hough F. Durrant-Whyte}. Durrant-Wyhte and his group showed that answer to \gls{slam}s lies in the nearly infinite amount of data that can be used. This lead to the motivation of finding algorithms which are trackable and approximate in a time realistic manner.\newline
 Sebastian Thrun was playing.
 
 % List and short information about  existing SLAMs
 \section{Existing Methods}
-There exits a big variety of SLAM methods, that try to achieve the same goal using different approaches \cite{openslam}.
+There exits a big variety of \gls{slam} methods, that try to achieve the same goal using different approaches \cite{openslam}.
 Most known or popular are the following:
 \begin{itemize}
     \item \underline{EKF SLAM} \newline
     Utilizes the extended Kalman filter. The algorithm  uses the likely-hood for data association.
-    It was the go-to SLAM from 1990 to the early 2000s until Fast SLAM was introduced \cite{Fastslam}. 
+    It was the go-to \gls{slam} from 1990 to the early 2000s until Fast SLAM was introduced \cite{Fastslam}. 
     
     \item \underline{Fast SLAM} \newline
     Works recursively  so it scales logarithmically to the scale of the landmark. It can handle much bigger landmarks than the EKF-SLAM ever could without requiring as much computing power \cite{Fastslam}. 
     
     \item \underline{ORB-SLAM2} \newline
-    It's a real-time SLAM library for Monocular, Stereo and RGB-D cameras. It can detect loops and relocate the camera in real-time. It uses camera trajectory and sparse 3D reconstruction to get information out of the image sequence \cite{orbslam}.
+    It's a real-time \gls{slam} library for Monocular, Stereo and RGB-D cameras. It can detect loops and relocate the camera in real-time. It uses camera trajectory and sparse 3D reconstruction to get information out of the image sequence \cite{orbslam}.
     
     \item \underline{DVO-SLAM} \newline
     Implements a \textit{dense visual SLAM} system for RGB-D cameras. It's based on \textit{Dense Visual Odometry} and was extended to include frame-to-key matching with loop closure to older key-frames \cite{dvoslam1}. 
     
     \item \underline{RGB-D SLAM} \newline
-    Utilizes the depth information of a RGB-D camera, e.g., Microsoft Kinect or Intel Real-Sense Cameras \cite{rosrgbdslam}.
+    Utilizes the depth information of a \gls{rgbd-camera}, e.g., Microsoft Kinect or Intel Real-Sense Cameras \cite{rosrgbdslam}.
     
     \item \underline{LSD-SLAM} \newline
-    It's a direct monocular SLAM. It tracks the \textit{direct image alignment} and estimates geometry in form of \textit{semi-dense depth map} instead of relying on keypoints \cite{lsdslam_eccv}.
+    It's a direct monocular \gls{slam}. It tracks the \textit{direct image alignment} and estimates geometry in form of \textit{semi-dense depth map} instead of relying on keypoints \cite{lsdslam_eccv}.
 \end{itemize}

@@ -3,7 +3,7 @@
 \chapter{ORB-SLAM2\authorA}\label{ref:orbslam}
 
 \section{What is ORB-SLAM?}
-ORB-SLAM2 is a versatile, real-time SLAM implementation which uses Mono-, Stereo- and RGB-D cameras. It's designed to generate a 3D map from prominent points in the picture and keypoints. It features loop closing, re-localization and a reusable map \cite{orbslam2}. It works in a wide variety of use cases. The SLAM can be used on a small hand-held camera or drones up to self driving cars.
+ORB-SLAM2 is a versatile, real-time \gls{slam} implementation which uses Mono-, Stereo- and RGB-D cameras. It's designed to generate a 3D map from prominent points in the picture and keypoints. It features loop closing, re-localization and a reusable map \cite{orbslam2}. It works in a wide variety of use cases. The SLAM can be used on a small hand-held camera or drones up to self driving cars.
 ORB-SLAM2 is based on ORB-SLAM and was inter alia developed by Raúl Mur-Artal who already worked on ORB-SLAM.\newline
 
 \begin{figure}[h]
@@ -17,7 +17,7 @@ ORB-SLAM2 is based on ORB-SLAM and was inter alia developed by Raúl Mur-Artal w
 \section{How does the ORB-SLAM work?}
 
 \subsection{Extracting Keypoints}
-The SLAM uses a feature-based method. This means that it extracts features on prominent keypoints throughout the image input. These feature information is then distributed to all operations which handle them independent from the camera type. \cite{orbslam2} \newline\newline
+The \gls{slam} uses a feature-based method. This means that it extracts features on prominent keypoints throughout the image input. These feature information is then distributed to all operations which handle them independent from the camera type. \cite{orbslam2} \newline\newline
 
 
 This is how finding these keypoints works on different camera types:

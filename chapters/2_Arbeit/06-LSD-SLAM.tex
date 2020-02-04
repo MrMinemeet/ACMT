@@ -3,7 +3,7 @@
 \chapter{LSD-SLAM\authorA}\label{ref:lsdslam}
 
 \section{What is LSD-SLAM?}
-LSD-SLAM stands for \textbf{L}arge-\textbf{S}cale \textbf{D}irect Monocular SLAM and is a fairly new real-time monocular SLAM that is fully direct-driven instead of relying on keypoint/keyfeature \cite{lsdslam_eccv}. The algorithm works on the image intensity for tracking and mapping at the same time.\newline
+LSD-SLAM stands for \textbf{L}arge-\textbf{S}cale \textbf{D}irect Monocular \gls{slam} and is a fairly new real-time monocular \gls{slam} that is fully direct-driven instead of relying on keypoint/keyfeature \cite{lsdslam_eccv}. The algorithm works on the image intensity for tracking and mapping at the same time.\newline
 This method allows building large-scale maps on normal processors that are consistent when comparing it to current state-of-the-art algorithms. \newline
 
 \begin{figure}[h]
@@ -17,9 +17,9 @@ This method allows building large-scale maps on normal processors that are consi
 \section{Difference Feature-Based and Direct}
 \begin{itemize}
     \item \underline{Feature-based} \newline
-        A feature-based SLAM (e.g. ORB-SLAM \ref{ref:orbslam}) looks for distinctive points in the image and then uses only these keypoints to process the information. When there are only a few prominent keypoints (e.g indoor, tunnels) the result will not be that accurate.
+        A feature-based \gls{slam} (e.g. ORB-SLAM \ref{ref:orbslam}) looks for distinctive points in the image and then uses only these keypoints to process the information. When there are only a few prominent keypoints (e.g indoor, tunnels) the result will not be that accurate.
     \item \underline{Direct} \newline
-        Direct based SLAMS use all information that's provided in the image. This does not only include distinctive points but also edges and sometimes surfaces and thus makes it possible to create a more accurate and denser 3D map \cite{lsdslam_eccv}.
+        Direct based \gls{slam}s use all information that's provided in the image. This does not only include distinctive points but also edges and sometimes surfaces and thus makes it possible to create a more accurate and denser 3D map \cite{lsdslam_eccv}.
 \end{itemize}
 \begin{figure}[h]
 	\centering
