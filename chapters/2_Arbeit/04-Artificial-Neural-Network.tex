@@ -50,8 +50,7 @@ A artificial neural network can be organized in many different ways.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.7\textwidth]{./media/images/feed_forward_neural_network.png}
-  	\caption{Feed forward network
-  	\\Source: https://tinyurl.com/y3yaqboq}
+  	\caption{Feed forward network}
   	\label{ffNN}
 \end{figure}
 
@@ -59,8 +58,22 @@ The following picture demonstrates a feed forward ANN .There are a variable numb
 
 \subsection{CNN}
 
+Convolution Neural Network (CNN) is the most important Network organization for our task. It is based on the human visual cortex and perfect for image and video recognition. CNN is based on the human visual cortex. The components of a CNN are a series of convolution and sub-sampling layers followed by a fully connected layer and a normalizing layer.
 
-\subsection{Encoder-Decoder-Based Architecture}
+How a CNN works will be explained in the following example. The same example like in "Review of Deep Learning Algorithms and Architectures" will be used\cite{networks,exampleCNN}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1.1\textwidth]{./media/images/CNN.PNG}
+  	\caption{7-layer architecture of CNN for character recognition
+  	\\ \cite[Fig.~4.]{networks,exampleCNN}}
+  	\label{CNN}
+\end{figure}
+
+Progressively more refined feature extraction at every layer is performed by the series of multiple convolution layers. This process is moving from input to output layer. After the convolution layers there are fully connected layer that perform classification. There is also the possibility of putting Sub-sampling or pooling layers between each convolution layer. The input of a CNN is 2D n*n pixelated image. Each layer consists of filters or kernels (groups of 2D neurons). In most neural networks neurons in each feature extraction layer are connected to all neurons in the adjacent layers. But in a CNN they are only connected to the spatially mapped fixed sized and partially overlapping neurons in the previous layer’s input image or feature map.
+
+
+
+\section{Encoder-Decoder-Based Architecture}
 
 
 
