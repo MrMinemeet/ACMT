@@ -1,0 +1,43 @@
+%YAML:1.0
+
+# Camera calibration and distortion parameters (OpenCV)
+Camera.fx: 600.43227
+Camera.fy: 605.883
+Camera.cx: 560.29343
+Camera.cy: 253.24984
+
+# Camera distortion parameters (OpenCV)
+Camera.k1: -0.253310
+Camera.k2: 0.043398
+Camera.p1: 0.005101
+Camera.p2: -0.00329
+Camera.k3: 0.0
+
+Camera.width: 1280
+Camera.height: 720
+
+# Camera frames per second
+Camera.fps: 30.0
+
+# Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
+Camera.RGB: 1
+
+#--------------------------------------------------------------------------------------------
+# ORB Parameters
+#--------------------------------------------------------------------------------------------
+
+# ORB Extractor: Number of features per image
+ORBextractor.nFeatures: 2000
+
+# ORB Extractor: Scale factor between levels in the scale pyramid
+ORBextractor.scaleFactor: 1.2
+
+# ORB Extractor: Number of levels in the scale pyramid
+ORBextractor.nLevels: 8
+
+# ORB Extractor: Fast threshold
+# Image is divided in a grid. At each cell FAST are extracted imposing a minimum response.
+# Firstly we impose iniThFAST. If no corners are detected we impose a lower value minThFAST
+# You can lower these values if your images have low contrast
+ORBextractor.iniThFAST: 20
+ORBextractor.minThFAST: 7

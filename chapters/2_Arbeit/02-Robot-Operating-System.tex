@@ -32,7 +32,7 @@ One of the core functionalities that \gls{ros} provides are the tools which allo
 \subsection{Rosbag}
 Rosbag is a tool that can be used over the command line to record, playback and store \gls{ros} message data. The data gets stored in a file called bag, where it records the messages as they come in. It's possible to play these bag files. By doing this the recorded messages get published into the system, as they where live. It's very handy if you need data for later development or to use a bunch of different scenarios for testing
 
-\subsection{RQt}
+\subsection{RQt}\label{rqt}
 RQt provides a graphical overview of the \gls{ros} computation graph. It shows the nodes and how they are connected to each other. It also shows if a node is even subscribing to a topic or publishes something. Other than that it can be used to subscribe to different topics and show them directly in RQt.
 \begin{figure}[h]
 	\centering
@@ -41,10 +41,10 @@ RQt provides a graphical overview of the \gls{ros} computation graph. It shows t
   	\label{rqtinterface}
 \end{figure}
 
-\subsection{CatKin}
+\subsection{CatKin}\label{catkin}
 Catkin is the newer \gls{ros} build system, which compiles the files in the source folder. It is based on CMake and is cross-platform and language-independent as most other \gls{ros} tools.
 
-\subsection{Rviz}
+\subsection{Rviz}\label{rviz}
 A visualizer for three-dimensional data where robots, environments and sensor information can be visualized. It is highly customise able with display many types of visualisation and plugin support. \newline
 \begin{figure}[h]
 	\centering
@@ -53,6 +53,6 @@ A visualizer for three-dimensional data where robots, environments and sensor in
   	\label{rvizinterface}
 \end{figure}
 
-\subsection{Roslaunch}
+\subsection{Roslaunch}\label{roslaunch}
 Roslaunch is a tool for launching multiple \gls{ros} nodes and setting parameters on startup. It can be used to launch nodes locally or remotely on a server.
 The configuration for a start script is written in a launch file using XML. In these files it's easy to make a automated startup and configuration process to be executed with one command. It's possible to execute launch files in other launch files to chain them together.
