@@ -49,7 +49,7 @@ In the code snipped \ref{code:videostreamMain} at first a \textit{piCamera} inst
 After the camera \enquote{recording} has started successfully the server is started to make the stream accessible to other devices. The server runs until the user closes the script using \textit{CTRL + C}. After closing the server the \textit{finally} block gets called, where the camera \enquote{recording} is stopped so that other programs can use the camera again.\newline
 \lstinputlisting[language=Python, firstline=77, lastline=91,caption={Main Function of Camera Feed},label={code:videostreamMain}]{./media/code_snippets/HTTPCamStream.py}
 
-The streamingHandler that is shown in snipped \ref{code:videoStreamHandler} handles the actions that are taken when client connects to the Raspberry Pi. At the beginning it checks if the client is requesting the \textit{/stream.mjpg} file. If the client is not requesting that specific file a \textit{404 Not Found} Error is returned. But if the correct file is requested at first a \textit{200 OK} code. In addition to the status code headers are send, which tell the client to not use cache. After sending the HTTP OK to the client a permanent loop is started which always waits until a new image from the camera is ready and then sends it to the client as an JPEG image. The loop ensures that the always client receives the latest image and so creates a video. Should the client drop the connection an exception is raised which causes the loop to stop and end the handler for that specific client until the client connects again.\newline
+The streamingHandler that is shown in snipped \ref{code:videoStreamHandler} handles the actions that are taken when client connects to the Raspberry Pi. At the beginning it checks if the client is requesting the \textit{/stream.mjpg} file. If the client is not requesting that specific file a \textsc{404 Not Found} Error is returned. But if the correct file is requested at first a \textsc{200 OK} code. In addition to the status code headers are send, which tell the client to not use cache. After sending the \textsc{HTTP OK} to the client a permanent loop is started which always waits until a new image from the camera is ready and then sends it to the client as an JPEG image. The loop ensures that the always client receives the latest image and so creates a video. Should the client drop the connection an exception is raised which causes the loop to stop and end the handler for that specific client until the client connects again.\newline
 \lstinputlisting[language=Python, firstline=42, lastline=74, caption={Streaming Handler of CamStream},label={code:videoStreamHandler}]{./media/code_snippets/HTTPCamStream.py}
 
 The behavior when a new image from the pi camera is ready to send is defined in the snipped \ref{code:videoStreamingOutput}. At the beginning it initializes itself with basically no image. \textit{piCamera} class constantly writes into this, as it's defined as the output. When a new image is ready the \textit{picamera} class sends \enquote{\textbackslash xff\textbackslash xd8} as binary to the output class to notify it. The output class then cuts the buffer so it only contains the current image and sets it in the \textit{frame} variable. To let everybody else know that a new image is ready it sends out a notification.\newline
@@ -85,13 +85,13 @@ The command for starting the node is the following, where amount of tiles, size 
 \begin{lstlisting}[language=BASH,caption={Start Calibration Node}]
 rosrun camera_calibration cameracalibrator.py --size 8x6 --square 0.026 --no-service-check image:=/camera/image_raw camera:=/camera
 \end{lstlisting}
-b
-This command opens a window which shows the live image feed from the camera and highlights edges on the checkerboard which is shown in figure \ref{cameracalibration}. These highlighted edges are points which are used to calculate the distortion parameters using an algorithm that was developed by OpenCV \cite{cameracalibrationopencv}.
+
+This command opens a window which shows the live image feed from the camera and highlights edges on the checkerboard which is shown in figure \ref{img:cameracalibration}. These highlighted edges are points which are used to calculate the distortion parameters using an algorithm that was developed by \href{https://docs.opencv.org/2.4/doc/tutorials/calib3d/camera_calibration/camera_calibration.html}{OpenCV} \cite{cameracalibrationopencv}.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.8\textwidth]{./media/images/CameraCalibration.png}
   	\caption{Camera calibration}
-  	\label{cameracalibration}
+  	\label{img:cameracalibration}
 \end{figure} \newline
 
 When the node has enough reference images the computing of the parameters can start. The duration of the calculations depends on the CPU and how many images have been taken. But most likely it will take around 5 Minutes until the computing is finished. The output data contains two formats of the same data which will look something like shown in figure \ref{code:calibrationyaml}. The output files are normally compatible with all applications without any issues.\newline
@@ -101,17 +101,25 @@ When the node has enough reference images the computing of the parameters can st
 % ---------------------------------------------------
 % Running Monocular ORB-SLAM2
 \section{Running Monocular ORB-SLAM2\authorA}\label{ref:runningmonocularorbslam}
-Integrating ORB-SLAM2 \ref{ref:orbslam} is pretty straight forward since there is already \gls{ros} version of it which is very well maintained by \textbf{Lennart Haller} on behav of \textit{appliedAI-Initiative} on GitHub \cite{orbslam2rosgithub}. It just needs to be cloned into the \textit{src} folder of the \gls{ros}-workspace and complied using the \textit{catkin build} command.When building the packs is finished the generated setup-file has to be sourced. The file is located under \textit{workspace/devel/setup.sh} and can be sources using the \textit{source setup.sh} command. After sourcing the setup all new types of commands that are added by the nodes are available.
+Integrating ORB-SLAM2 \ref{ref:orbslam} is pretty straight forward since there is already \gls{ros} version of it which is very well maintained by \textbf{Lennart Haller} on behav of \textit{appliedAI-Initiative} on \href{https://github.com/appliedAI-Initiative/orb_slam_2_ros}{GitHub} \cite{orbslam2rosgithub}. It just needs to be cloned into the \textit{src} folder of the \gls{ros}-workspace and complied using the \textit{catkin build} command.When building the packs is finished the generated setup-file has to be sourced. The file is located under \textit{workspace/devel/setup.sh} and can be sources using the \textit{source setup.sh} command. After sourcing the setup all new types of commands that are added by the nodes are available.
 
 \subsection{Calibration file}\label{ref:calibrationorbslam}
-Before using the ORB-SLAM the calibration file needs to be created in \textit{src/orb\textunderscore slam2/config/config.yaml}. For a baseline the config from another mono-camera can be copied. The calibration part looks like shown in \ref{code:orbslamconfig} and thus the config that the calibration tool generated needs to be converted manually. In the camera\textunderscore matrix the values are the following: \textsc{[\textbf{camera.fx}, 0, \textbf{camera.cx}, 0, \textbf{camera.fy}, \textbf{camera.cy}, 0, 0, 1]}. The distortion\textunderscore coefficients need to be mapped like this \textsc{[\textbf{camera.k1}, \textbf{camera.k2}, \textbf{camera.p1}, \textbf{p2}, 0]}. Additionally the width, height and \gls{fps} of the incoming video have to be set.\newline
+Before using the ORB-SLAM the calibration file needs to be created in \textit{src/orb\_slam2/config/config.yaml}. For a baseline the config from another mono-camera can be copied. The calibration part looks like shown in \ref{code:orbslamconfig} and thus the config that the calibration tool generated needs to be converted manually. In the camera\_matrix the values are the following:
+\begin{lstlisting}[language=XML,caption={Matrix listing},label={code:calibrationmatrix}]
+	  	[camera.fx, 0, camera.cx, 0, camera.fy, camera.cy, 0, 0, 1]
+\end{lstlisting}
+The distortion\_coefficients need to be mapped like shown in listing \ref{code:calibrationdistortionmatrix}.
+\begin{lstlisting}[language=XML,caption={Matrix listing},label={code:calibrationdistortionmatrix}]
+	  	[camera.k1, camera.k2, camera.p1, camera.p2, 0]
+\end{lstlisting}
+Additionally the width, height and \gls{fps} of the incoming video have to be set to use the correct amount of frames and resolution.\newline
 \lstinputlisting[language=XML, firstline=3, lastline=17, caption={ORB-SLAM2 config calibration}, label={code:orbslamconfig}]{./media/code_snippets/config.yaml}
 
 \subsection{Launching ORB-SLAM2}
-To load the new config file a new launch file is the best way to tell the \gls{slam} to use this config instead of the default parameters. The launch files for ORB-SLAM2 sit in \textit{src/orb\textunderscore slam2/ros/launch} where an existing one can be duplicated. The new launch-file should look like the snipped \ref{code:orbslam2launch} except in line \textbf{13} the wrong config is specified. Additionally in the config other settings can be set. For example if the node should publish a pointcloud or position, only do tracking. It is also possible to load an existing map which has been created before and might be used to add additional information or do tracking only on it. When everything is configured it is now possible to launch the ORB-SLAM2 using \textit{roslaunch orb\textunderscore slam2\textunderscore ros orbslam.launch}. \newline
+To load the new config file a new launch file is the best way to tell the \gls{slam} to use this config instead of the default parameters. The launch files for ORB-SLAM2 sit in \textit{src/orb\_slam2/ros/launch} where an existing one can be duplicated. The new launch-file should look like the snipped \ref{code:orbslam2launch} except in line \textbf{13} the wrong config is specified. Additionally in the config other settings can be set. For example if the node should publish a pointcloud or position, only do tracking. It is also possible to load an existing map which has been created before and might be used to add additional information or do tracking only on it. When everything is configured it is now possible to launch the ORB-SLAM2 using \textit{roslaunch orb\_slam2\_ros orbslam.launch}. \newline
 \lstinputlisting[language=XML,  caption={ORB-SLAM2 launch file}, label={code:orbslam2launch}]{./media/code_snippets/orbslam.launch}
 
-When starting RQt \ref{rqt} and opening the \textsc{Node Graph} it should show, like seen in figure\ref{img:nodegraphstreamorbslam} that the camera-node is sending \textit{image\textunderscore raw} to the \textit{orb\textunderscore slam2\textunderscore mono}-node. If that is not the case it is most likely due to some spelling error or a \textit{remap} line in the launch-file of the ORB-SLAM2.\newline
+When starting RQt \ref{rqt} and opening the \textsc{Node Graph} it should show, like seen in figure \ref{img:nodegraphstreamorbslam} that the camera-node is sending \textit{image\_raw} to the \textit{orb\_slam2\_mono}-node. If that is not the case it is most likely due to some spelling error or a \textit{remap} line in the launch-file of the ORB-SLAM2.\newline
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.8\textwidth]{./media/images/nodegraphstreamorbslam.png}
@@ -129,10 +137,10 @@ As explained in the ORB-SLAM chapter \ref{ref:orbslam} there are some problems w
 Since stereo cameras and synchronization boards are not cheap, two identical Raspberry Pi's with the same camera are used for the testing environment. The two Raspberry Pi's have the same SD card type, operating system and packages to prevent any timing difference as much as possible. The Cameras are taped on a stick of wood with a distance of around six centimeters to mimic the average distance between the human eyes.
 
 \subsection{Calibration}
-Calibration in this testing environment is pretty straight forward as the cameras used are the normal Pi Cameras v2 which basically have little to no distortion. Just for being on the save side calibration was done on both cameras and the values only are slightly different. So the format that was entered in the config was the same as on the monocular \gls{slam} calbration \ref{ref:calibrationorbslam}. If cameras with distortion are used there are more values that are required a bit further down in the config.
+Calibration in this testing environment is pretty straight forward as the cameras used are the normal Pi Cameras v2 which basically have little to no distortion. Just for being on the save side calibration was done on both cameras and the values only are slightly different. So the format that was entered in the config was the same as on the monocular \gls{slam} calibration \ref{ref:calibrationorbslam}. If cameras with distortion are used there are more values that are required a bit further down in the config.
 
 \subsection{Software setup}
-The same Python script as already explained in section \ref{ref:streamPythonScript} is used on both devices to make the camera feed available on the local network. To receive these streams two MJPG-Stream receivers are required. The thing to note here is that the camera name must be unique, e.g they may be named \textsc{lcamera} \ref{code:leftcameralaunch} and \textsc{rcamera} \ref{code:rightcameralaunch} to know which is the left and right camera. Also required is to set the stream receiver to the correct IP-address since it is important later.\newline
+The same Python script as already explained in section \ref{ref:streamPythonScript} is used on both devices to make the camera feed available on the local network. To receive these streams two MJPG-Stream receivers are required. The thing to note here is that the camera name must be unique, e.g they may be named \textsc{lcamera} \ref{code:leftcameralaunch} and \textsc{rcamera} \ref{code:rightcameralaunch} to know which is the left and right camera. Also required is to set the stream receiver to the correct IP-address since it is important later. Re-building isn't necessary since only the config and launchfile change, which are not compiled but instead loaded every time the \gls{slam} starts.\newline
 \begin{lstlisting}[language=XML,caption={Left camera stream launch file},label={code:leftcameralaunch}]
 	  	<arg name="camera_name" value="lcamera" />
 \end{lstlisting}
@@ -141,24 +149,28 @@ The same Python script as already explained in section \ref{ref:streamPythonScri
 \end{lstlisting}
 
 Since the two video streams are still on a topic that the \gls{slam} doesn't subscribe on it is necessary to remap the two streams to the correct topics. This can be done in a launchfile for the stereo ORB-SLAM.
-To do this it is only required to add two lines which are shown in listing \ref{code:stereoorbremap} at line \textbf{5} and \textbf{6} before all other settings for the \gls{slam} get set. \newline
+To do this it is only required to add two lines which are shown in listing \ref{code:stereoorbremap} at line \textbf{5} and \textbf{6} before all other settings for the \gls{slam} get set. This remaps the nodes that triesw to subscribe to e.g \textit{/image\_right/image\_color\_rect} to the correct topic that is publishing the image named \textit{/rcamera/image\_raw} \newline
 \lstinputlisting[language=XML, caption={ORB-SLAM2 stereo launch file}, label={code:stereoorbremap}]{./media/code_snippets/orbslamstereo.launch}
 
-When starting the stereoscopic launch file for the \gls{slam} it should indicate in RQt \ref{rqt} that the ORB-SLAM subscribed onto both video streams like shown in figure \ref{img:nodegraphstereoslam}. Additionally when opening the \textit{Image View} and selecting \textsc{/orb\textunderscore slam2\textunderscore stereo/image\textunderscore image} as the source the image of the left camera should be displayed.\newline
+\subsection{Launching}
+When starting the stereoscopic launch for the \gls{slam} using the command \ref{cmd:stereoorbslamlaunch} ,it should indicate in RQt \ref{rqt} that the ORB-SLAM subscribed onto both video streams like shown in figure \ref{img:nodegraphstereoslam}. If only one is connected it might be caused by a misspelled word in the remap line or when naming the cameras in the stream launch file. Additionally when opening the \textit{Image View} and selecting \textsc{/orb\_slam2\_stereo/image\_image} as the source the image of the left camera should be displayed.\newline
+\begin{lstlisting}[language=bash, label={cmd:stereoorbslamlaunch}]
+    roslaunch orb_slam2_ros stereo-slam.launch
+\end{lstlisting}
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.8\textwidth]{./media/images/nodegraphstereoorbslam.png}
   	\caption{Node Graph with Stereo ORB-SLAM2}
   	\label{img:nodegraphstereoslam}
 \end{figure}
+Note that the \gls{slam} will freak out when the cameras are not \enquote{looking} at the same picture or are at different angles.
 
 
 % ---------------------------------------------------
 % Running LSD-SLAM
 \section{Running LSD-SLAM\authorA}
-Running the LSD-SLAM is not as straight forward as it is on the ORB-SLAM \ref{ref:runningmonocularorbslam}. The implementation of the LSD-SLAM is made to use it with \gls{ros} out of the box but the original version by the Computer Vision Group at the Technical University of Munich was not updated in the past 5 years and such had some problems when running it on a newer version of \gls{ros} and Ubuntu. Therefor an more up-to-date version by Kevin George \cite{kevingeorgelsdslam} was used where he added support for newer versions of libraries and fixed some bugs. Even though the fork by Kevin George was updated 2 Years ago there were still some bugs and other problems. So a fork was created with the fixes to address the problems that where in Kevin George's Repository. The fork includes bug fixes to run LSD-SLAM on \gls{ros}-Melodic and Ubuntu 18.04 pretty much out of the box.\newline
-
-The fork\cite{alexandervoglspergerlsdslam} contains implementation to use \textsc{Eigen v3.2.5} that doesn't need to be installed, a special version of General Graph Optimization (\gls{g2o}) and a \textsc{CSPARSE}-directory path fix.\newline
+Running the LSD-SLAM is not as straight forward as it is on the ORB-SLAM \ref{ref:runningmonocularorbslam}. The implementation of the LSD-SLAM is made to use it with \gls{ros} out of the box but the \href{https://github.com/tum-vision/lsd_slam}{original version} \cite{githublsdslamtum} by the Computer Vision Group at the Technical University of Munich was not updated in the past 5 years and such had some problems when running it on a newer version of \gls{ros} and Ubuntu. Therefor an more up-to-date version by Kevin George was used where he added support for newer versions of libraries and fixed some bugs. Even though the \href{https://github.com/kevin-george/lsd_slam}{fork by Kevin George} \cite{kevingeorgelsdslam} was updated 2 Years ago there were still some bugs and other problems. So a fork was created with the fixes to address the problems that where in Kevin George's Repository. The fork includes bug fixes to run LSD-SLAM on \gls{ros}-Melodic and Ubuntu 18.04 pretty much out of the box.\newline
+The \href{https://github.com/MrMinemeet/lsd_slam}{new fork} \cite{alexandervoglspergerlsdslam} contains implementation to use \textsc{Eigen v3.2.5} that doesn't need to be installed, a special version of General Graph Optimization (\gls{g2o}) and a \textsc{CSPARSE}-directory path fix.\newline
 
 \subsection{Installing LSD-SLAM}
 To run the LSD-SLAM a few packages are required. They can be installed using\newline
@@ -168,7 +180,7 @@ To run the LSD-SLAM a few packages are required. They can be installed using\new
 
 and then creating a link for \textit{libQGLViewer} to the file the LSD-SLAM is looking for. To create the softlink this command is used wich basically creates a link just without the \textsc{-qt4} at the end.\newline
 \begin{lstlisting}[language=bash]
-    sudo ln -s /usr/lib/x86\textunderscore 64-linux-gnu/libQGLViewer-qt4.so /usr/lib/x86\textunderscore 64-linux-gnu/libQGLViewer.so
+    sudo ln -s /usr/lib/x86\_64-linux-gnu/libQGLViewer-qt4.so /usr/lib/x86\_64-linux-gnu/libQGLViewer.so
 \end{lstlisting}
 
 As the LSD-SLAM requires a special version of the \gls{g2o} framework all other versions that have been installed on \gls{ros} need to be removed completely. For this first the \textit{ros-melodic-g2o} package needs to be purged and the leftovers need to be deleted to not conflict with the special version that is going to be installed later using.\newline
@@ -182,7 +194,7 @@ To install the correct version of \gls{g2o} it needs to be cloned from \url{http
     sudo make install
 \end{lstlisting}
 
-When done it is also necessary to download a specific version of the \textsc{Eigen}-library which has to be in a location where it is not likely to be moved as the full path is required. The Path should look a bit like this \textit{/home/alex/Projects/LSD-SLAM/eigen-eigen-bdd17ee3b1b3/}. This path needs to be set in the \textit{CMakeList.txt} in the \textit{lsd\textunderscore slam\textunderscore core} folder which was contained in the LSD-SLAM repository. In the file at line \textbf{106} there should be a placeholder like shown in \ref{code:eigenpathdir}, which has to be replaced with the path of \textsc{Eigen}.\newline
+When done it is also necessary to download a specific version of the \textsc{Eigen}-library which has to be in a location where it is not likely to be moved as the full path is required. The Path should look a bit like this \textit{/home/alex/Projects/LSD-SLAM/eigen-eigen-bdd17ee3b1b3/}. This path needs to be set in the \textit{CMakeList.txt} in the \textit{lsd\_slam\_core} folder which was contained in the LSD-SLAM repository. In the file at line \textbf{106} there should be a placeholder like shown in \ref{code:eigenpathdir}, which has to be replaced with the path of \textsc{Eigen}.\newline
 \lstinputlisting[language=XML, firstline=106, lastline=106, caption={CMakeList Eigen Directory}, label={code:eigenpathdir}]{./media/code_snippets/LSD-SLAM-Core-CMakeList.txt}
 
 When these steps are done there is only one last command to be executed in the root directory of the workspace. To compile the LSD-SLAM in the src folder the command is \newline
@@ -190,3 +202,29 @@ When these steps are done there is only one last command to be executed in the r
     catkin_make
 \end{lstlisting}
 which may take some time. 
+
+
+% ---------------------------------------------------
+% DeepTAM
+\section{DeepTAM}
+In the following section the process of getting DeepTAM to run will be explained. Also the Problems of our workflow will be listed.
+
+\subsection{Ubuntu 16.04}
+
+The first attempt was to work with Ubuntu 16.04 and Python3, following the instructions given by Uni-Freiburg. At first a virtual environment manager needed to be installed with pip3(a package manager for Python3). Here pew is used and installed. Afterwards a new environment is created and entered. These are the commands for these tasks.  
+
+\begin{lstlisting}[language=bash]
+    pip3 install pew
+    pew new deeptam
+    pew in deeptam
+\end{lstlisting}
+
+The next step was to install tensorflow(\gls{tf}), minieigen and scikit-image, also with pip3. Here the first error occurred. The error is that during the installation of minieigen Eigen/Core cannot be found. This problem can be worked around with the following commands.
+
+\begin{lstlisting}[language=bash]
+    sudo apt-get install libeigen3-dev
+    sudo apt install python3-minieigen 
+    sudo apt-get install libboost-all-dev
+\end{lstlisting}
+
+After these commands minieigen can be installed with pip3. The next step is to clone and build lmbspecialops. lmbspecialops is a collection of tensorflow ops. The ops focus on networks for predicting depth and camera motion but can also be useful for other tasks. 

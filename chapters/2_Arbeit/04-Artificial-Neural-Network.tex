@@ -58,9 +58,9 @@ The following picture demonstrates a feed forward ANN .There are a variable numb
 
 \subsection{CNN}
 
-Convolution Neural Network (CNN) is the most important Network organization for our task. It is based on the human visual cortex and perfect for image and video recognition. CNN is based on the human visual cortex. The components of a CNN are a series of convolution and sub-sampling layers followed by a fully connected layer and a normalizing layer.
+Convolution Neural Network (CNN) is the most important Network organization for our task. It is based on the human visual cortex and perfect for image and video recognition. The components of a CNN are a series of convolution and sub-sampling layers followed by a fully connected layer and a normalizing layer.
 
-How a CNN works will be explained in the following example. The same example like in "Review of Deep Learning Algorithms and Architectures" will be used\cite{networks,exampleCNN}
+How a CNN works will be explained in the following example. The same example like in "Review of Deep Learning Algorithms and Architectures"\cite{networks,exampleCNN} will be used
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1.1\textwidth]{./media/images/CNN.PNG}
@@ -69,7 +69,7 @@ How a CNN works will be explained in the following example. The same example lik
   	\label{CNN}
 \end{figure}
 
-Progressively more refined feature extraction at every layer is performed by the series of multiple convolution layers. This process is moving from input to output layer. After the convolution layers there are fully connected layer that perform classification. There is also the possibility of putting Sub-sampling or pooling layers between each convolution layer. The input of a CNN is 2D n*n pixelated image. Each layer consists of filters or kernels (groups of 2D neurons). In most neural networks neurons in each feature extraction layer are connected to all neurons in the adjacent layers. But in a CNN they are only connected to the spatially mapped fixed sized and partially overlapping neurons in the previous layer’s input image or feature map.
+Progressively more refined feature extraction at every layer is performed by the series of multiple convolution layers. This process is moving from input to output layer. After the convolution layers there are fully connected layers that perform classification. There is also the possibility of putting Sub-sampling or pooling layers between each convolution layer. The input of a CNN is a 2D n*n pixelated image. Each layer consists of filters or kernels (groups of 2D neurons). In most neural networks neurons in each feature extraction layer are connected to all neurons in the adjacent layers. But in a CNN they are only connected to the spatially mapped fixed sized and partially overlapping neurons in the previous layer’s input image or feature map.
 
 
 
