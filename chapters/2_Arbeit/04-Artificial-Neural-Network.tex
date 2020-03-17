@@ -12,7 +12,7 @@
  
 \section{Components of an ANN}
 
-Simplified a ANN consists of three main components(neurons, connection and the weight associated with them) the propagation function and a bias. In the following topics I will give you a short summary what these components are and afterward I will explain how they work together. 
+Simplified a ANN consists of these components: neurons, connection and the weight associated with them, the propagation function, a loss function and a bias. The following topics will give you a short summary what these components are and afterward is an explanation  how they work together. 
 
 \subsection{Neurons}
 
@@ -35,7 +35,7 @@ A neuron, we call it base for this example, has two neurons connected to it as i
 
 \subsection{Propagation function  and activation function}
 
-This is a function witch takes the Inputs of a neuron, the weight of these connections and the bias and adds them up. The resulting value is the processed by the activation function which sets the output. One of the most common activation function is the sigmoid function because it is not a step function wich means the output doesn’t change instantaneously. Thats important for the training algorithmus.
+This is a function witch takes the Inputs of a neuron, the weight of these connections and the bias and adds them up. The resulting value is the processed by the activation function which sets the output. One of the most common activation function is the sigmoid function because it is not a step function which means the output does not  change instantaneously. That is important for the training algorithm.
 
 \subsection{Bias}
 
@@ -58,7 +58,7 @@ The following picture demonstrates a feed forward ANN .There are a variable numb
 
 \subsection{CNN}
 
-Convolution Neural Network (CNN) is the most important Network organization for our task. It is based on the human visual cortex and perfect for image and video recognition. The components of a CNN are a series of convolution and sub-sampling layers followed by a fully connected layer and a normalizing layer.
+Convolution Neural Network (CNN) is the most important Network organization for this task. It is based on the human visual cortex and perfect for image and video recognition. The components of a CNN are a series of convolution and sub-sampling layers followed by a fully connected layer and a normalizing layer.
 
 How a CNN works will be explained in the following example. The same example like in "Review of Deep Learning Algorithms and Architectures"\cite{networks,exampleCNN} will be used
 \begin{figure}[h]
@@ -71,9 +71,11 @@ How a CNN works will be explained in the following example. The same example lik
 
 Progressively more refined feature extraction at every layer is performed by the series of multiple convolution layers. This process is moving from input to output layer. After the convolution layers there are fully connected layers that perform classification. There is also the possibility of putting Sub-sampling or pooling layers between each convolution layer. The input of a CNN is a 2D n*n pixelated image. Each layer consists of filters or kernels (groups of 2D neurons). In most neural networks neurons in each feature extraction layer are connected to all neurons in the adjacent layers. But in a CNN they are only connected to the spatially mapped fixed sized and partially overlapping neurons in the previous layer’s input image or feature map.
 
-
-
 \section{Encoder-Decoder-Based Architecture}
+
+Encoder-Decoder-Based networks are networks, which try to reconstruct their own input. You construct the network so that it reduces the input size by using one or more hidden layers, until it reaches a reasonably small hidden layer in the middle. As a result your data has been compressed (encoded) into a few variables. From this hidden representation the network tries to reconstruct (decode) the input again.
+
+In order to do a good job at reconstructing the input the network has to learn a good representation of the data in the middle hidden layer. This can be useful for dimensionality reduction, or for generating new “synthetic” data from a given hidden representation. This is especially important considering that we are trying to construct a 3D Map out of the Camera Input. 
 
 
 

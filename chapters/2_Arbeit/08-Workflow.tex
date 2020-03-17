@@ -172,19 +172,99 @@ Note that the \gls{slam} will freak out when the cameras are not \enquote{lookin
 Running the LSD-SLAM is not as straight forward as it is on the ORB-SLAM \ref{ref:runningmonocularorbslam}. The implementation of the LSD-SLAM is made to use it with \gls{ros} out of the box but the \href{https://github.com/tum-vision/lsd_slam}{original version} \cite{githublsdslamtum} by the Computer Vision Group at the Technical University of Munich was not updated in the past 5 years and such had some problems when running it on a newer version of \gls{ros} and Ubuntu. Therefor an more up-to-date version by Kevin George was used where he added support for newer versions of libraries and fixed some bugs. Even though the \href{https://github.com/kevin-george/lsd_slam}{fork by Kevin George} \cite{kevingeorgelsdslam} was updated 2 Years ago there were still some bugs and other problems. So a fork was created with the fixes to address the problems that where in Kevin George's Repository. The fork includes bug fixes to run LSD-SLAM on \gls{ros}-Melodic and Ubuntu 18.04 pretty much out of the box.\newline
 The \href{https://github.com/MrMinemeet/lsd_slam}{new fork} \cite{alexandervoglspergerlsdslam} contains implementation to use \textsc{Eigen v3.2.5} that doesn't need to be installed, a special version of General Graph Optimization (\gls{g2o}) and a \textsc{CSPARSE}-directory path fix.\newline
 
-\subsection{Installing LSD-SLAM}
-To run the LSD-SLAM a few packages are required. They can be installed using\newline
+% Listing of errors when building LSD-SLAM from original source
+\subsection{Errors when building from source original source}
+This list shows typical errors when building the LSD-SLAM from source and how to fix or at least bypass them.
+
+%Cannot bind non_const lvalue to rvalu
+\subsubsection{Cannot bind non\_const lvalue to rvalue}
+When receiving an error like shown in listing \ref{error:non_const_lvalue_to_rvalue} this is most likely due to a datatype error where the functions expects a \textsc{double} but a \textsc{float} is defined.
+to fix this, it is only necessary to change \textit{float x,y,z;} to \textit{double x,y,z;} in the two files in the error.\newline
+\begin{lstlisting}[language=bash,label={error:non_const_lvalue_to_rvalue}]
+PointCloudViewer.h:136:26: error: cannot bind non-const lvalue reference of type 'qreal& {aka double&}' to an rvalue of type 'qreal {aka double}'
+   frame.getPosition(x,y,z);
+   
+PointCloudViewer.cpp:327:44: error: cannot bind non-const lvalue reference of type 'qreal& {aka double&}' to an rvalue of type 'qreal {aka double}'
+        camera()->frame()->getPosition(x,y,z);
+\end{lstlisting}
+
+% no such function found: g2o::OptimizationAlgorithmLevenberg
+% base_vertex.h not found
+\subsubsection{\textit{no such function found: g2o::OptimizationAlgorithmLevenberg} and \textit{base\_vertex.h not found}}
+This error occurs due to a change in newer \gls{g2o} versions. To fix this, it is required to install the \textit{g2o c++03} version. The fix  itself for this error can be found at \gls{g2o} \ref{ref:g2o}.
+
+% cannot find -lcparse
+\subsubsection{/usr/bin/ld: cannot find -lcsparse}
+The error shown in \ref{error:cannotfindlcsparse} most likely accuress when catkin is looking for files that are in a different folder that expected by it.
+\begin{lstlisting}[language=bash,label={error:cannotfindlcsparse}]
+[ 91%] Linking CXX shared library /home/alex/lsd-slam_ws/devel/lib/liblsdslam.so
+/usr/bin/ld: cannot find -lcsparse
+collect2: error: ld returned 1 exit status
+\end{lstlisting}
+To fix it the paths where the required files are, have to be included in the \textit{CMakeList.txt} file which can be found in the source folder. Add the block shown in \ref{code:csparseincludedir} at the top of the file and replace \textsc{csparse} and \textsc{cxsparse} with \textsc{\$\{CSPARSE\_INCLUDE\_DIR\}} at the line where \textit{target\_link\_libraries} is adding the links to libraries.
+
+\begin{lstlisting}[label={error:csparseincludedir}]
+find_path(CSPARSE_INCLUDE_DIR NAMES cs.h
+  PATHS
+  /usr/include/suitesparse
+  /usr/include
+  /opt/local/include
+  /usr/local/include
+  /sw/include
+  /usr/include/ufsparse
+  /opt/local/include/ufsparse
+  /usr/local/include/ufsparse
+  /sw/include/ufsparse
+  PATH_SUFFIXES
+  suitesparse
+  )
+\end{lstlisting}
+
+% liblsdslam.so: Warning: undefined reference »..«
+\subsubsection{liblsdslam.so: Warning: undefined reference »..«}
+This error is a batch of errors that occur at the same time.
+It is mainly that references cannot be found by the system. The error might look something like shown below and is very easy to fix. The problem is that the \textit{libsuitesparse-dev} package is missing. When installing the package and then compiling \gls{g2o} it should work again.
 \begin{lstlisting}[language=bash]
+.../liblsdslam.so: Warning: undefined reference cs_di_post
+.../liblsdslam.so: Warning: undefined reference cs_di_etree
+.../liblsdslam.so: Warning: undefined reference cs_di_sfree
+\end{lstlisting}
+
+% double free or corruption
+\subsubsection{double free or corruption}
+\begin{lstlisting}[language=bash]
+double free or corruption (out)
+Aborted (core dumped)
+\end{lstlisting}
+The error shown in listing is due to changes in newer versions of Eigen. To fix this the easiest way is to download the version \textsc{3.2.5} from the \href{https://bitbucket.org/eigen/eigen/downloads/?tab=tags}{Eigen Bitbucket website} \cite{eigenbitbucket} and un-compress it somewhere where it can stay during the build process.
+In the \textit{CMakeList.txt} of the \textit{lsd\_slam\_core} add the code like shown in listing \ref{code:lsdcorecmakelist} and replace \textsc{PATH} with the just unpacked folder path.
+\begin{lstlisting}[language=bash, label={code:lsdcorecmakelist}, caption={CMakeList in lsd\_slam\_core with fix for Eigen}]
+set(EIGEN3_INCLUDE_DIR "PATH")
+include_directories(
+  include
+  ${EIGEN3_INCLUDE_DIR}
+\end{lstlisting}
+
+% g2oTypeSim3Sophus.h Errors
+\subsubsection{g2oTypeSim3Sophus.h Errors}
+Another error that likes to come up multiple times in the same file. 
+
+
+% Installing LSD-SLAM with fixed repository
+\subsection{Installing LSD-SLAM from fixed repository}
+To run the LSD-SLAM a few packages are required. They can be installed using\newline
+\begin{lstlisting}[language=bash, caption={Installing prerequisites for LSD-SLAM}]
     apt install ros-melodic-cv-bridge liblapack-dev libblas-dev freeglut3-dev libqglviewer-dev-qt4 libsuitesparse-dev libx11-dev
 \end{lstlisting}
 
 and then creating a link for \textit{libQGLViewer} to the file the LSD-SLAM is looking for. To create the softlink this command is used wich basically creates a link just without the \textsc{-qt4} at the end.\newline
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=bash,caption={Creating softlink for libQGLViewer.so}]
     sudo ln -s /usr/lib/x86\_64-linux-gnu/libQGLViewer-qt4.so /usr/lib/x86\_64-linux-gnu/libQGLViewer.so
 \end{lstlisting}
 
+\subsubsection{G2O}\label{ref:g2o}
 As the LSD-SLAM requires a special version of the \gls{g2o} framework all other versions that have been installed on \gls{ros} need to be removed completely. For this first the \textit{ros-melodic-g2o} package needs to be purged and the leftovers need to be deleted to not conflict with the special version that is going to be installed later using.\newline
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=bash, caption={Removing leftover from \gls{g2o}}]
     rm -r /usr/local/lib/libg2o* /usr/local/include/g2o /usr/local/lib/g2o /usr/local/bin/g2o*
 \end{lstlisting}
 
@@ -194,10 +274,12 @@ To install the correct version of \gls{g2o} it needs to be cloned from \url{http
     sudo make install
 \end{lstlisting}
 
+\subsubsection{Eigen}\label{ref:eigen}
 When done it is also necessary to download a specific version of the \textsc{Eigen}-library which has to be in a location where it is not likely to be moved as the full path is required. The Path should look a bit like this \textit{/home/alex/Projects/LSD-SLAM/eigen-eigen-bdd17ee3b1b3/}. This path needs to be set in the \textit{CMakeList.txt} in the \textit{lsd\_slam\_core} folder which was contained in the LSD-SLAM repository. In the file at line \textbf{106} there should be a placeholder like shown in \ref{code:eigenpathdir}, which has to be replaced with the path of \textsc{Eigen}.\newline
 \lstinputlisting[language=XML, firstline=106, lastline=106, caption={CMakeList Eigen Directory}, label={code:eigenpathdir}]{./media/code_snippets/LSD-SLAM-Core-CMakeList.txt}
 
-When these steps are done there is only one last command to be executed in the root directory of the workspace. To compile the LSD-SLAM in the src folder the command is \newline
+\subsubsection{Building LSD-SLAM}\label{ref:buildinglsdslam}
+When these steps are done there is only one last command to be executed in the root directory of the workspace. To compile the LSD-SLAM in the \textit{src} folder the command is \newline
 \begin{lstlisting}[language=bash]
     catkin_make
 \end{lstlisting}
@@ -206,12 +288,12 @@ which may take some time.
 
 % ---------------------------------------------------
 % DeepTAM
-\section{DeepTAM}
+\section{DeepTAM\authorB}
 In the following section the process of getting DeepTAM to run will be explained. Also the Problems of our workflow will be listed.
 
 \subsection{Ubuntu 16.04}
 
-The first attempt was to work with Ubuntu 16.04 and Python3, following the instructions given by Uni-Freiburg. At first a virtual environment manager needed to be installed with pip3(a package manager for Python3). Here pew is used and installed. Afterwards a new environment is created and entered. These are the commands for these tasks.  
+The first attempt was to work with Ubuntu 16.04 and Python3, following the instructions given by Uni-Freiburg. At first a virtual environment manager needed to be installed with pip3(a package manager for Python3). Here pew is used and installed. Afterwards a new environment is created and entered. These are the commands:  
 
 \begin{lstlisting}[language=bash]
     pip3 install pew
@@ -223,7 +305,7 @@ The next step was to install tensorflow(\gls{tf}), minieigen and scikit-image, a
 
 \begin{lstlisting}[language=bash]
     sudo apt-get install libeigen3-dev
-    sudo apt install python3-minieigen 
+    sudo apt-get install python3-minieigen 
     sudo apt-get install libboost-all-dev
 \end{lstlisting}
 
