@@ -248,7 +248,55 @@ include_directories(
 % g2oTypeSim3Sophus.h Errors
 \subsubsection{g2oTypeSim3Sophus.h Errors}
 Another error that likes to come up multiple times in the same file. 
+These errors will look something like show below but in a much bigger scale.
+\begin{lstlisting}[language=bash]
+lsd_slam/lsd_slam_core/src/GlobalMapping/g2oTypeSim3Sophus.h:96:33: error: template argument 1 is invalid
+   Eigen::Map<const g2o::Vector7d> v(m);
+\end{lstlisting}
+This error occurs because of some changed in \textsc{Eigen} and is a relativly easy fix.
+To fix it it is only necessary to change the code show below from \textit{line 1} to \textit{line 2} in the \textit{g2oTypeSim3Sophus.h} \cite{g2oTypeSim3Sophus.hfix}.
 
+\begin{lstlisting}[language=C++, caption={Fix for g2oTypeSim3Sophus.h}]
+Eigen::Map<const g2o::Vector7d> v(m);
+Eigen::Map<const Eigen::Matrix<double, 7 ,1>> v(m);
+\end{lstlisting}
+
+% g2o No matching function for call
+\subsubsection{g2o No matching function for call}
+When getting this error it is because of a non-compatible version of \gls{g2o}. To fix this it is required to uninstall all other versions of \gls{g2o} and then install a working version like explained at \ref{ref:g2o}.
+
+% ros/ros.h: No such file or directory
+\subsubsection{ros/ros.h: No such file or directory}
+If an error message like shown occurs it is because the catkin directories are not included by default.
+\begin{lstlisting}[language=bash]
+lsd_slam/lsd_slam_core/src/IOWrapper/ROS/ROSImageStreamThread.h:27:10: fatal error: ros/ros.h: No such file or directory
+\end{lstlisting}
+To fix it it is required to add \textit{\${catkin\_INCLUDE\_DIRS}} to the \textit{include\_directories} in the CMakeList-File \cite{rosroshnosuchfileordirectory}. It should look like the listing below afterwards.
+\begin{lstlisting}[language=C++, caption={Fix for ros/ros.h: No such file or directory}]
+include_directories(
+  include
+  ${EIGEN3_INCLUDE_DIR}
+  ${PROJECT_SOURCE_DIR}/src
+  ${PROJECT_SOURCE_DIR}/thirdparty/Sophus
+  ${CSPARSE_INCLUDE_DIR} #Has been set by SuiteParse
+  ${CHOLMOD_INCLUDE_DIR} #Has been set by SuiteParse
+  ${OpenCV_INCLUDE_DIRS}
+  ${catkin_INCLUDE_DIRS}
+)
+\end{lstlisting}
+
+
+% ‘CV_GRAY2RGB’ & ‘CV_RGB2GRAY’ not declared
+\subsubsection{\'CV\_GRAY2RGB\' \& \'CV\_RGB2GRAY\' not declared}
+If the following error comes up it is due to a change in the naming scheme.
+\begin{lstlisting}[language=bash]
+error: 'CV_GRAY2RGB' was not declared in this scope
+   cv::cvtColor(keyFrameImage8u, res, CV_GRAY2RGB);
+\end{lstlisting}
+The fix is just to replace \textit{cv\_} with \textit{vc::COLOR\_} and should look like e.g.  
+\begin{lstlisting}[language=C++, caption={Example fix for \'CV\_GRAY2RGB\' \& \'CV\_RGB2GRAY\' not declared}]
+cv::COLOR_GRAY2RGB
+\end{lstlisting}
 
 % Installing LSD-SLAM with fixed repository
 \subsection{Installing LSD-SLAM from fixed repository}
@@ -268,7 +316,7 @@ As the LSD-SLAM requires a special version of the \gls{g2o} framework all other 
     rm -r /usr/local/lib/libg2o* /usr/local/include/g2o /usr/local/lib/g2o /usr/local/bin/g2o*
 \end{lstlisting}
 
-To install the correct version of \gls{g2o} it needs to be cloned from \url{https://github.com/felixendres/g2o.git} which creates a g2o folder in which a \textit{build}-folder has to be created. In the \textit{build} folder two commands have to be executed in order to install the framework.\newline
+To install the correct version of \gls{g2o} it needs to be cloned from \href{https://github.com/felixendres/g2o.git}{GitHub} \cite{g2ofelixendres} which creates a g2o folder in which a \textit{build}-folder has to be created. In the \textit{build} folder two commands have to be executed in order to install the framework.\newline
 \begin{lstlisting}[language=bash]
     cmake ..
     sudo make install
@@ -284,6 +332,32 @@ When these steps are done there is only one last command to be executed in the r
     catkin_make
 \end{lstlisting}
 which may take some time. 
+
+
+\subsection{Things to keep in mind}\label{ref:lsdslamgetgoodresults}
+These points are helpful to get good results and some to keep in mind when running the \gls{slam}. \cite{githublsdslamtum}.
+\begin{itemize}
+    \item \underline{Resolution} \newline
+    A recommended resolution for the video input is \textsc{640x480} pixel. Higher resolutions are possible but require more computing power and changes in hard-coded values.
+    
+    \item \underline{Framerate} \newline
+    At least 30 \gls{fps} or more should be delivered to the \gls{slam} to get good results when moving.
+    
+    \item \underline{Global shutter} \newline
+    The camera should have a global shutter where the the image is taken all at once. Rolling shutters which scan the image from top to bottom \cite{globalrollingshutter}. This might lead to changes while the scan is running and thus generating false information. This wrong information then leads to inferior results.
+    
+    \item \underline{Field of View} \newline
+    A camera lens that has a wide field of view (\gls{fov}) is recommended to get a bigger area that the camera can capture and thus is able to fetch more information. A lens with \textsc{130\degree} or more is recommended.
+    
+    \item \underline{Camera Movement} \newline
+    It is a very important aspect. Typically the LSD-\gls{slam} is designed to move more sideways but when having a wide \gls{fov} it is also possible to have forwards and backwards motion.
+    Rotating the camera without moving it will not work since there is not enough camera translation. 
+    
+    \item \underline{Different results when running multiple times} \newline
+    Since the LSD-\gls{slam} is designed to be non-deterministic the results will not be the same all the time. E.g when running a dataset the map will most likely be similar but not exactly the same. This is due to palatalization and some slight changes in keyframe which have a big impact on everything that follows and thus creates different results.
+    
+\end{itemize}
+
 
 
 % ---------------------------------------------------
