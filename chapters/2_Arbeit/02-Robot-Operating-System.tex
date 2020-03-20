@@ -1,6 +1,6 @@
 % Discription of what ROS is and what it does
 
-\chapter{Robot Operating System\authorA}
+\chapter{Robot Operating System\authorA} \label{ref:ros}
 
 \section{What is the Robot Operating System?}
 The Robot Operating System, which is also known as \gls{ros} is a flexible framework for writing software that gets utilized on robots. It was founded by Willow Garage in 2012 and gets primarily maintained by the \href{https://www.openrobotics.org/}{Open Source Robot Foundation} (\gls{osrf}) \cite{osrf}. In Europe the project gets coordinated by the Fraunhofer IPA in form of the \href{https://rosindustrial.org/ric-eu}{\gls{ros} Industrial Consortium Europe} \cite{rosice}. \gls{ros} is a middle-ware which is not an operating system but provides services that manage hardware abstraction, low-level device control, message-passing between processes and package management. \emph{\enquote{It is a collection of tools, libraries, and conventions that aim to simplify the task of creating complex and robust robot behavior across a wide variety of robotic platforms.}} \cite{aboutros}
@@ -27,13 +27,13 @@ The \gls{ros} libraries are geared toward a UNIX-System which is mainly due to t
 For example \textit{Ubuntu} is in the list of supported operating systems, while others like \textit{Fedora, Mac OS and Windows} are \enquote{experimental} and are mainly supported by the community \cite{isrosforme}.
 
 \section{Tools}
-One of the core functionalities that \gls{ros} provides are the tools which allow the developers to visualize 2D and 3D data, record data, easily navigating \gls{ros} packages, creating complex scripts that configure and setup processes. This tool simplifies and provides solution for common robotic development.
+One of the core functionalities that \gls{ros} provides are the tools which allow the developers to visualize 2D and 3D data, record data, easily navigating \gls{ros} packages, creating complex scripts that configure and setup processes. This tool simplifies the workflow and provides solution for common robotic development.
 
 \subsection{Rosbag}
-Rosbag is a tool that can be used via the command line to record, playback and store \gls{ros} message data. The col gets stored in a file called bag, where it records the messages as they come in. This makes it possible to record all published topics and then artificially run them later again. By doing this the recorded messages get published into the system, as they where live. It's very handy if you need data for later development or to test nodes on different scenarios that come across later.
+Rosbag is a tool that can be used via the command line to record, playback and store \gls{ros} message data. When starting a recording all the published data gets stored in a so called bag-file. This makes it possible to record all published topics and then artificially run them later again. By doing this the recorded messages get published into the system, as they where live. It's very handy if you need data for later development or to test nodes on different scenarios that come across later.
 
 \subsection{RQt}\label{rqt}
-RQt provides a graphical overview of the \gls{ros} computation graph. It shows the nodes and how they are connected to each other. It also shows if a node is even subscribing to a topic or publishes something. Other than that it can be used to subscribe to different topics and show them directly in RQt.
+RQt provides a graphical overview of the \gls{ros} computation graph. It shows the nodes and how they are connected to each other. It also shows if a node is even subscribing to a topic or publishes something. Other than that it can be used to subscribe to different topics and show them directly in RQt.\newline
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.7\textwidth]{./media/images/RQt}

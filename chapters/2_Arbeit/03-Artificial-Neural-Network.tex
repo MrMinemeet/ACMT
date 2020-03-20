@@ -31,11 +31,11 @@ Neurons are elementary units in an ANN. A neuron gets one ore more inputs and de
 These Neurons are Connected. Which neurons are connected with others depends on the structure. The weights characterize how important a connection between neurons is. 
 
 \textbf{For example:}\newline
-A neuron, we call it base for this example, has two neurons connected to it as inputs. The weight of the connection of the first neuron has a bigger weight than the second connection. That means the output of the base depends more on the input of the first neuron 
+A neuron, we call it base for this example, has three neurons connected to it as inputs. These neurons are called in1 and in2. The weight of the connection of in1 has a bigger weight than the connection in2. That means the output of the base depends more on the input of in1
 
 \subsection{Propagation function  and activation function}
 
-This is a function witch takes the Inputs of a neuron, the weight of these connections and the bias and adds them up. The resulting value is the processed by the activation function which sets the output. One of the most common activation function is the sigmoid function because it is not a step function which means the output does not  change instantaneously. That is important for the training algorithm.
+This is a function which takes the Inputs of a neuron, the weight of these connections and the bias and adds them up. The resulting value is the processed by the activation function which sets the output. One of the most common activation function is the sigmoid function because it is not a step function which means the output does not  change instantaneously. That is important for the training algorithm because with that the output of a neuron can not only be 1 or 0. It can be any number between 1 and 0 and give an answer for how certain it is. Therefore the training will be easier because it is easier to find out in which directions and how much the weights should be changed.    
 
 \subsection{Bias}
 
