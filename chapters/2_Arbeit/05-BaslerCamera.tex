@@ -9,7 +9,7 @@ The Camera is a 1.2 Megapixel CMOS camera that uses a USB 3.0 interface. It can 
 	\centering
 	\includegraphics[height=0.3\textwidth]{./media/images/Basler-Camera.jpg}
   	\caption{Basler Camera
-  	\\Source: \url{https://tinyurl.com/ss4mwzq}}
+  	\\Src: \url{https://tinyurl.com/ss4mwzq}}
   	\label{orbslamkittidataset}
 \end{figure}
 
@@ -21,7 +21,7 @@ The added node that fetches the video from the camera and then publishes it is c
 
 \subsection{Compiling node}
 
-\begin{itemize}
+\begin{enumerate}
     \item \underline{Cloning Pylon Ros Camera} \newline
     First clone the \href{https://github.com/basler/pylon-ros-camera}{Github Repository} by the \cite{pylonroscamera} \textsc{Basler AG} into a workspace.
     
@@ -38,7 +38,7 @@ sudo sh -c 'echo "yaml https://raw.githubusercontent.com/basler/pylon-ros-camera
     \item \underline{Compiling and Sourcing} \newline
     To compile the nodes run \textit{catkin build} or \textit{caktin\_make} in the root directory of the workspace.\newline
     To use the node when compiling has finished it is required to enter \textit{./devel/setup.bash} when being in the root directory.
-\end{itemize}
+\end{enumerate}
 
 \subsection{Using Pylon-Ros-Camera Node}
 Running the node is as simple as launching it by using \newline

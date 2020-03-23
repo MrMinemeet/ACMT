@@ -4,26 +4,44 @@
 % ---------------------------------------------------
 % USED HARDWARE
 \section{Used Hardware\authorA}
-For video capturing a \href{https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/}{\textit{Raspberry Pi 3B+}} with a \href{https://www.raspberrypi.org/products/camera-module-v2/}{\textit{Pi Camera V2}} or a \href{https://www.sainsmart.com/products/wide-angle-fov160-5-megapixel-camera-module-for-raspberry-pi}{\textit{Pi Wide Angle Lens Camera}} are used. The Raspberry Pi sends the video feed to a separate more power full PC over WiFi using a Python3 script \ref{ref:streamPythonScript} since the scripts that are available use \gls{rtsp} (Real Time Streaming Protocol) had a few problems. \newline
+For video capturing a \href{https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/}{\textit{Raspberry Pi 3B+}} of the Raspberry Pi Foundation with a \href{https://www.raspberrypi.org/products/camera-module-v2/}{\textit{Pi Camera V2}} or a \href{https://www.sainsmart.com/products/wide-angle-fov160-5-megapixel-camera-module-for-raspberry-pi}{\textit{Pi Wide Angle Lens Camera}} are used. The Raspberry Pi sends the video feed to a separate more power full PC over WiFi using a Python3 script \ref{ref:streamPythonScript} since the scripts that are available use \gls{rtsp} (Real Time Streaming Protocol) had a few problems. \newline
 For running the DeepTAM a \href{https://support.lenovo.com/us/en/solutions/pd005642}{\textit{Lenovo Think-Station S20}} is used since it requires a dedicated graphics card. Since the DeepTAM is a bit tricky to get it working a \href{https://www.lenovo.com/de/de/laptops/thinkpad/w-series/w550s/}{\textit{Lenovo W550s}} was used as a secondary machine to not loose any progress. For more intense work a server access at the Johannes Kepler University was supplied to work on their system which contains Nvidia Quadro and Nvidia GTX graphics cards. \newline
-As the work is based around implementing it on the Audi Autonomous Driving Cup (\gls{aadc}) car a cheaper remote controlled model car was borrowed to test the algorithms in an live environment that is not based on a dataset. The \gls{aadc} car was not used since it has very much power and is pretty expensive.
+As the work is based around implementing it on the Audi Autonomous Driving Cup (\gls{aadc}) car a cheaper remote controlled model car was borrowed to test the algorithms in an live environment that is not based on a dataset. The \gls{aadc} car was not used since it has very much power and is pretty expensive.\newline
+\begin{figure}[h]
+	\centering
+	\includegraphics[height=0.3\textwidth]{./media/images/rpi_logo.eps}
+  	\caption{Raspberry Pi Logo\texttrademark
+  	\\Src: \url{https://tinyurl.com/njb3a7o}}
+  	\label{picamssetup}
+\end{figure}
+
+\subsection{Raspberry Pi}
+The Raspberry Pi\texttrademark \footnote{Raspberry Pi is a trademark} is running \href{https://www.raspberrypi.org/downloads/raspbian/}{Raspbian Buster} since it is a well optimized version of Debian for the mini computer and only required to be able to execute a Python script to send the raw video feed over http to the the processing device.\newline
+
+\subsection{PC}
+The Think-Station and the laptop are running Kubuntu 18.04, which is basically Ubuntu but has a GUI that's a more like Windows and is supported until May 2023. \newline
+The Think-Station has a eight core Intel Xeon CPU, a GTX 1660TI and 12GB of RAM inside. \newline
+The Laptop has a four core Intel i7 and 8GB of RAM built in.
 
 
 % ---------------------------------------------------
 % USED SOFTWARE
 \section{Used Software\authorA}
-\subsection{Raspberry Pi}
-The Raspberry Pi is running \href{https://www.raspberrypi.org/downloads/raspbian/}{Raspbian Buster} since it is well optimized for the mini computer and only required to be able to execute a Python script to send the raw video feed over http to the the processing device.\newline
-\subsection{PC}
-The Think-Station and the laptop are running Kubuntu 18.04, which is basically Ubuntu but has a GUI that's a more like Windows and is supported until May 2023. \newline
-The Think-Station has a eight core Intel Xeon CPU, a GTX 1660TI and 12GB of RAM inside. \newline
-The Laptop has a four core Intel i7 and 8GB of RAM built in.\newline
-
 \textbf{\underline{ADTF}} \newline
 At first Ubuntu 16.04 with Automotive Data and Time-Triggered Framework (\gls{adtf}) was used since it's the recommended environment by the \gls{aadc} car manufacturer DigitalWerk. There were many compatibility ans stability issues and it is very difficult to get into the whole system as it's not very beginner friendly. After trying to get the basics of \gls{adtf} working it was clear that switching to ROS might be better. The main problems with \gls{adtf} are, that \gls{adtf} isn't running very stable, requires certain packages to be in a non-standard folders and not having them in the regular location and it is very difficult to work with when using it for the first time.
 
 \textbf{\underline{ROS}} \newline
 Running ROS Melodic on Kubuntu 18.04 was pretty straight forward. The instructions on the \href{https://wiki.ros.org/melodic/Installation}{ROS website} \cite{installros} are very clear and can be directly copied without issues. The principle of the workspace is also easy to understand. In the source folder the modules get put in and when compiling the modules automatically generates a setup file to use them. Usage is very easy as the framework already does a lot in the background and using nodes is nearly always setting input and output with a few parameters.
+
+\textbf{\underline{Python}}\footnote{"Python" and the Python logos are trademarks or registered trademarks of the Python Software Foundation} \newline
+\href{https://www.python.org}{Python}\cite{PythonHomepage} is a object-oriented, high-level programming language.\emph{\enquote{Its high-level built in data structures, combined with dynamic typing and dynamic binding, make it very attractive for Rapid Application Development, as well as for use as a scripting or glue language to connect existing components together.}}~\cite{WhatIsPython} Next to that the community features a wide range of already written packages which makes it even more simple to create programs.\newline
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{./media/images/python_logo.png}
+  	\caption{Python Software Foundation logo\texttrademark
+  	\\Src: \url{https://tinyurl.com/tfxfbrt}}
+  	\label{img:raspiconfig}
+\end{figure}
 
 
 % ---------------------------------------------------
@@ -45,7 +63,7 @@ As the PC and laptop are not the best idea to run around with, a Raspberry Pi is
 To use a camera on a Raspberry Pi the camera serial interface (\gls{csi}) needs to be enabled first. This can be done in the built-in tool called \textit{raspi-config}. In this tool as seen in figure \ref{img:raspiconfig} under the subsection called \textit{Interfacing Options} there is a option with the name \textit{Camera}. When the interface is activated a restart is required.\newline
 \begin{figure}[h]
 	\centering
-	\includegraphics[height=0.5\textwidth]{./media/images/raspiconfig.png}
+	\includegraphics[width=0.9\textwidth]{./media/images/raspiconfig.png}
   	\caption{Activating camerainterface in raspi-config}
   	\label{img:raspiconfig}
 \end{figure}
@@ -102,7 +120,6 @@ This command opens a window which shows the live image feed from the camera and 
 
 When the node has enough reference images the computing of the parameters can start. The duration of the calculations depends on the CPU and how many images have been taken. But most likely it will take around 5 Minutes until the computing is finished. The output data contains two formats of the same data which will look something like shown in figure \ref{code:calibrationyaml}. The output files are normally compatible with all applications without any issues.\newline
 \lstinputlisting[language=XML, firstline=1, lastline=14, caption={Calibration file},label={code:calibrationyaml}]{./media/code_snippets/calibration.yaml}
-
 
 
 % ---------------------------------------------------
@@ -192,6 +209,24 @@ When starting the stereoscopic launch for the \gls{slam} using the command \ref{
   	\label{img:nodegraphstereoslam}
 \end{figure}
 Note that the \gls{slam} will freak out when the cameras are not \enquote{looking} at the same picture or are at different angles.
+
+% ---------------------------------------------------
+% Results
+\section{Result with ORB-SLAM}
+The result when running the ORB-\gls{slam} is a 3D map that consist of many dots that are at specific points in a space. To get the map out of the \gls{ros} node it is necessary to call a service \ref{ref:rosservice}. Depending on the used camera type the command looks like one shown in listing \ref{code:saveorbslammap}.\newline
+\begin{lstlisting}[language=BASH,caption={Saving map from ORB-SLAM},label={code:saveorbslammap}]
+rosservice call /orb_slam2_rgbd/save_map map.bin
+rosservice call /orb_slam2_stereo/save_map map.bin
+rosservice call /orb_slam2_mono/save_map map.bin
+\end{lstlisting}
+When viewing the map in a programm like RViz \ref{rviz} it should look similarly to figure \ref{img:orbslammaptopdown} \newline.
+\begin{figure}[h]
+	\centering
+	\includegraphics[height=0.5\textwidth]{./media/images/orbslamtopdown.png}
+  	\caption{ORB-SLAM Top Down
+  	\\ Src: \url{https://tinyurl.com/swoouaa}}
+  	\label{img:orbslammaptopdown}
+\end{figure}
 
 
 % ---------------------------------------------------
