@@ -18,17 +18,17 @@ ORB-SLAM2 is based on ORB-SLAM and was inter alia developed by Raúl Mur-Artal w
 The \gls{slam} is made out of multiple blocks which all handle a different type of operation. These operations range from extracting the keypoints to localization.
 
 \subsection{Extracting Keypoints}
-The \gls{slam} uses a feature-based method. This means that it extracts features on prominent keypoints throughout the image input. These feature information is then distributed to all operations which handle them independent from the camera type. \cite{orbslam2} \newline\newline
+The \gls{slam} uses a feature-based method. This means that it extracts features on prominent keypoints throughout the image input. These feature information is then distributed to all operations which handle them independently from the camera type. \cite{orbslam2} \newline\newline
 
 
 This is how finding these keypoints works on different camera types:
 \begin{itemize}
     \item \underline{Stereo Image} \newline
-    For a stereo camera setup the keypoints get extracted from the image using a survival of the fittest process, where the most prominent points stay until a threshold is reached. This is done for both images separately and then the left keypoints are searched on the right image. Then the found points get compared to the original ones that where found on the right side
+    For a stereo camera setup the keypoints get extracted from the image using a survival of the fittest process, were the most prominent points stay until a threshold is reached. This is done for both images separately and then the left keypoints are searched on the right image. Then the found points get compared to the original ones that where found on the right side
     \item \underline{RGB-D Image} \newline
     On a \gls{rgbd} camera keypoints get extracted using prominent keypoints and then calculating the approximate position using the depth information from the information from the depth sensor.
     \item \underline{Monocular Image} \newline
-    On a Monocular image the approximate position gets triangulated by using multiple images. The Disadvantage is that they don't provide a scale information and only do rotational and transnational movement estimations.
+    On a Monocular image the approximate position gets triangulated by using multiple images. The disadvantage is that they don't provide a scale information and only do rotational and transnational movement estimations.
 \end{itemize}
 
 \subsection{Loop-closing and Bundle Adjustments}

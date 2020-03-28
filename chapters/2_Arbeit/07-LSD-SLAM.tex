@@ -44,7 +44,7 @@ New keyframes are created when there where no frames before or the camera has mo
 Not every frame results in a new keyframe. Frames that don't make it to a new keyframe are used to improve and refine the current keyframe. The refinement is done by using a small stereo comparison for regions in an image where the expected use for advancement is higher. The result of this comparison then gets merged into the existing 3D point cloud to add potentially new information or refining existing pixels \cite{lsdslam_eccv}.
 
 \subsection{Map optimization}
-Scaling, rotation and movement isn't always perfect, which results in drift. Even if the drift effect is little it adds up, which might result in some very off map \cite{lsdslam_eccv}. The Pose-Graph-Optimization is a optimization algorithm which aims to fix these drifts with pretty good results. The advantages of the pose-graph-optimization are that it's fast and vulnerable for poor initialization estimates \cite{posegraphoptimization}. \newline
+Scaling, rotation and movement is not always perfect, which results in drift. Even if the drift effect is little it adds up, which might result in a very distorted map \cite{lsdslam_eccv}. The Pose-Graph-Optimization is an optimization algorithm which aims to fix these drifts with pretty good results. The advantages of the pose-graph-optimization are that it is fast and vulnerable for poor initialization estimates \cite{posegraphoptimization}. \newline
 
 \begin{figure}[h]
 	\centering
