@@ -8,15 +8,14 @@
 % 	Überschrift, Inhaltsverzeichnis
 %	--------------------------------------------------------
 \chapter*{Abstract}
-A big problem for self-driving cars is to analyze the environment it is in and how to process the incoming data to get the most information out of it.  Why is this such an important task when we already have technology like GPS? It is because GPS is not always that accurate or not available at all and also the information must be up to date all the time (E.g. changes due to a construction). This paper focuses on this problem when the input data is fetched by a camera and thus only contains visual data. There were three different ways tested. They all have in common that they use the data to generate a digital map and show the position off the car itself in this map. The first two methods ORB-SLAM and LSD-SLAM are mathematical algorithms. The Third method DeepTAM uses Deep Neural Networks which can learn adapt when given enough training data. 
+% ENGLISH
+A big problem for self-driving cars is to analyze the environment it is in and how to process the incoming data to get the most information out of it.  Why is this such an important task when we already have technology like GPS? It is because GPS is not always that accurate or not available at all and the information must be up to date all the time (E.g. changes due to a construction). This paper focuses on the problem when the input data is fetched by a camera and thus only contains visual data. There were three different ways tested. They all have in common that they use the data to generate a digital map and show the position off the car itself in this map. The first two methods ORB-SLAM and LSD-SLAM are mathematical algorithms. Both work with the Robot Operating System which is important for the practical use. The Third method DeepTAM uses Deep Neural Networks which can learn adapt when given enough training data. It is a system for keyframe-based dense camera tracking and depth map estimation that is entirely learned. This Paper points out the pros and contras of each method compared to the other methods and gives a small glimpse into the future of methods.
+\newline
+\newline
+\newline
+\newline
+% GERMAN
+Ein großes Problem für selbstfahrende Autos ist es, die Umgebung, in der sich das Auto befindent befinden, zu analysieren und die eingehenden Daten zu verarbeiten, um das Maximum an Informationen herauszuholen.  Warum ist dies eine so wichtige Aufgabe, wenn wir bereits über Technologie wie GPS verfügen? Weil GPS nicht immer so genau oder gar nicht verfügbar ist und die Informationen immer auf dem neuesten Stand sein müssen (z.B. Änderungen aufgrund einer Baustelle). Diese Arbeit konzentriert sich auf das Problme, wenn die Eingangsdaten von einer Kamera geholt weden und somit nur visuelle Daten enthalten. Es wurden drei verschiedene Methoden getestet. Alle haben gemeinsam, das sie die Daten zur Erstellung einer digitalen Karte verwenden und die Position des Fahrzeugs selbst in dieser Karte anzeigen. Die ersten beiden Methoden ORB-SLAM und LSD-SLAM sind mathematische Algorithmen. Beide arbeiten mit dem für den praktischen Einsatz wichtigen Robot Operating System (ROS). Die dritte Methode DeepTAM verwendet ein sogenanntes Deep Neural Network, welches aus genug Trainingsdaten lernen kann. Es handelt es sich um ein Keyframe basiertes System von Kameraverfolgung und Tiefenschätzung zur Generierung von 3D Karten. Diese Arbeit vergleicht und zeigt die Vor- und Nachteile der einzelnen Methoden. Außerdem gibt sie einen kleinen Blick in zukünftige Angehensweisen.
+ 
 
 \addcontentsline{toc}{chapter}{Abstract}
-
-
-%	--------------------------------------------------------
-% 	Inhalt
-%	--------------------------------------------------------
-
-Im Vorwort teilt der Bearbeiter dem Leser wichtige Tatsachen mit, die Erklärungen zu seiner Arbeit beinhalten -- z.B. die Motivation für die Bearbeitung des Themas oder besondere Schwierigkeiten bei der Bearbeitung und/oder Materialbeschaffung. 
-
-Hier können auch Mitteilungen persönlicher Natur enthalten sein -- z.B. Dank an Institutionen/Personen für die geleistete Unterstützung. 
