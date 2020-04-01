@@ -439,7 +439,7 @@ These points are helpful to get good results and some to keep in mind when runni
 \section{DeepTAM\authorB}
 In the following section the process of getting DeepTAM to run will be explained. Also the Problems of our workflow will be listed.
 
-\subsection{Ubuntu 16.04}
+\subsection{Errors when building from source original source}
 
 The first attempt was to work with Ubuntu 16.04 and Python3, following the instructions given by Uni-Freiburg. At first a virtual environment manager needed to be installed with pip3(a package manager for Python3). Here pew is used and installed. Afterwards a new environment is created and entered. These are the commands:  
 
@@ -458,3 +458,5 @@ The next step was to install tensorflow(\gls{tf}), minieigen and scikit-image, a
 \end{lstlisting}
 
 After these commands minieigen can be installed with pip3. The next step is to clone and build lmbspecialops. lmbspecialops is a collection of tensorflow ops. The ops focus on networks for predicting depth and camera motion but can also be useful for other tasks. 
+
+\subsection{Errors when building with Script}
