@@ -91,13 +91,13 @@ Alexander Voglsperger, Simon Moharitsch \\
 Johannes Kepler University - Artificial Intelligence Lab\\
 
 \textbf{Task definition} & 
-{The task of this work is to get depth information out of a video stream in real time. The considered field of application is an autonomous driving car that uses several cameras to orientate itself while driving.}\\
+{The task of this work is to get depth information out of a video stream in real time. The considered field of application is an autonomous driving car that uses several cameras to orientate itself while driving. The first way is to use the Robot Operating System (\gls{ros}) to send the video from the camera to two Simultaneous Localization And Mapping (\gls{slam}) algorithms which gather depth information from the images and then output a point cloud which represents the detected surroundings. Another way is to get the DeepTAM, a method with artificial intelligence, working again. As DeepTAM has not been updated for a while there are many compatibility issues with newer drivers, newer Tensor Flow framework and other required libraries. Thus the task is to fix the compatibility issue}\\
 
 \textbf{Realization} & 
-{Simultaneous Localization And Mapping (\gls{slam}) algorithms are implemented on the free available platform Robot Operating System (\gls{ros}). ORB-\gls{slam} and LSD-\gls{slam} are two specific SLAM methods. These two slams have been modified to get executable program code on \gls{ros}. Several performance tests and a comparison between ORB-\gls{slam} and LSD-\gls{slam} are also part of this work.} \\
+{Simultaneous Localization And Mapping (\gls{slam}) algorithms are implemented on the free available platform Robot Operating System (\gls{ros}). ORB-\gls{slam} and LSD-\gls{slam} are two specific SLAM methods. These two \gls{slam}s have been modified to get executable program code on \gls{ros}. Several performance tests and a comparison between ORB-\gls{slam} and LSD-\gls{slam} are also part of this work. } \\
 
 \textbf{Outcome} & 
-{In this thesis the result of ORB-\gls{slam} and the LSD-\gls{slam} are compared. The ORB-\gls{slam} is working, but will not produce a detailed map if prominent points are missing in the video. Prominent points are points, edges that stand out of its surroundings and such are a way the \gls{slam}s can get information. The LSD-\gls{slam} does not work as good as the ORB-\gls{slam} when the camera only has a axial movement in the sense that it will not react on movement and thus generates an incorrect map. As a result the LSD-\gls{slam} only works on cars when a wide-angle camera lens is used. The problem with DeepTAM it has not been updated recently and because of that there are many compatibility issues with newer drivers, newer Tensor Flow framework and other required libraries.} \\
+{In this thesis the result of ORB-\gls{slam} and the LSD-\gls{slam} are compared. The ORB-\gls{slam} is working, but will not produce a detailed map if prominent points are missing in the video. Prominent points are points, edges that stand out of its surroundings and such are a way the \gls{slam}s can get information. The LSD-\gls{slam} does not work as good as the ORB-\gls{slam} when the camera only has a axial movement in the sense that it will not react on movement and thus generates an incorrect map. As a result the LSD-\gls{slam} only works on cars when a wide-angle camera lens is used. DeepTAM works on Ubuntu 16.04. Since this is not up to date, most libraries need to be downgraded. This then creates problems with the drivers. To get it working again it would be required to change more things in the code of DeepTAM.} \\
 
 \end{tabularx}
 
@@ -131,6 +131,8 @@ Elektronik und Technische Informatik\\
 \textbf{\mbox{Illustrative graph,} \mbox{photo} \mbox{(incl. explanation)}} & 
 {
 Structure of the flowchart:
+\newline
+\newline
 \begin{center}
 	\includegraphics[width=1\linewidth]{media/images/illustrative_graph.png}
 \end{center}
