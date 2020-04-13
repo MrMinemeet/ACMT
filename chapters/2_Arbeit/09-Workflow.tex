@@ -212,7 +212,7 @@ Note that the \gls{slam} will freak out when the cameras are not \enquote{lookin
 
 % ---------------------------------------------------
 % Results
-\section{Result with ORB-SLAM}
+\section{Result with ORB-SLAM} \label{ref:orbslamresults}
 The result when running the ORB-\gls{slam} is a 3D map that consist of many dots that are at specific points in a space. To get the map out of the \gls{ros} node it is necessary to call a service \ref{ref:rosservice}. Depending on the used camera type the command looks like one shown in listing \ref{code:saveorbslammap}.\newline
 \begin{lstlisting}[language=BASH,caption={Saving map from ORB-SLAM},label={code:saveorbslammap}]
 rosservice call /orb_slam2_rgbd/save_map map.bin
@@ -429,8 +429,33 @@ These points are helpful to get good results and some to keep in mind when runni
     
     \item \underline{Different results when running multiple times} \newline
     Since the LSD-\gls{slam} is designed to be non-deterministic the results will not be the same all the time. E.g when running a dataset the map will most likely be similar but not exactly the same. This is due to parallelisation and some slight changes in keyframe which have a big impact on everything that follows in the processing order and thus creates different results.
-    
 \end{itemize}
+
+\section{Launching}
+When running the LSD-\gls{slam} it is necessary to specify what the sources are. The command should look similar to command \ref{code:lsdslamcorestart} and for debugging purpose it is also possible to show the debug image that the \gls{slam} is working on using the command. \ref{code:lsdslamviewerstart}.
+\begin{lstlisting}[language=bash, label={code:lsdslamcorestart}]
+    rosrun lsd_slam_core live_slam image:=/camera/image_raw camera_info:=/camera/camera_info
+\end{lstlisting}
+\begin{lstlisting}[language=bash, label={code:lsdslamviewerstart}]
+    rosrun lsd_slam_viewer viewer
+\end{lstlisting}
+When looking in RQt \ref{rqt} it shows that the LSD-\gls{slam} has connected to the camera and the viewer connected to the LSD-\gls{slam}. The node graph most likely looks like shown in figure \ref{img:nodegraphlsdslam}.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{./media/images/nodegraphlsdslam.png}
+  	\caption{Node Graph with Stream and LSD-SLAM}
+  	\label{img:nodegraphlsdslam}
+\end{figure}
+
+ \section{Results with LSD-SLAM}
+The result when running the LSD-\gls{slam} is a 3D map which contains many dots in space which represent a edges, surfaces and other details. Compared to the ORB-\gls{slam} results \ref{ref:orbslamresults} the LSD-\gls{slam} produces a more detailed map in terms of amount of points and how they are laid out. When looking into a visualization programm like RViz \ref{rviz} it the map should look similar to \ref{img:lsdslamresult} which shows the more detailed map due to more information gathered by the \gls{slam}.
+\begin{figure}[h]
+	\centering
+	\includegraphics[height=0.7\textwidth]{./media/images/lsdslamresult.png}
+  	\caption{LSD-SLAM Topdown and Detailed View
+  	\\ Source: https://tinyurl.com/uepquna}
+  	\label{img:lsdslamresult}
+\end{figure}
 
 
 

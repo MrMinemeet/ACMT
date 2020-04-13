@@ -91,7 +91,7 @@ Alexander Voglsperger, Simon Moharitsch \\
 Johannes Kepler University - Artificial Intelligence Lab\\
 
 \textbf{Task definition} & 
-{The task of this work is to get depth information out of a video stream in real time. The considered field of application is an autonomous driving car that uses several cameras to orientate itself while driving. In a first approach the Robot Operating System (\gls{ros}) sends the video of a camera to two Simultaneous Localization And Mapping (\gls{slam}) algorithms which gather depth information out of the images. This results in a point cloud which represents the detected surroundings. Another approach is to get the DeepTAM, a method which implements artificial intelligence methods to estimate distances between objects in each frame of a video stream. As DeepTAM has not been updated for a while there are many compatibility issues with newer drivers, newer Tensor Flow framework and other required libraries. Thus the task is to fix the compatibility issue.}\\
+{The task of this work is to get depth information out of a video stream in real time. The considered field of application is an autonomous driving car that uses several cameras to orientate itself while driving. In a first approach the Robot Operating System (\gls{ros}) sends the video of a camera to two Simultaneous Localization And Mapping (\gls{slam}) algorithms which gather depth information out of the images. This results in a point cloud which represents the detected surroundings. Another approach is DeepTAM, a method which implements artificial intelligence methods to estimate distances between objects in each frame of a video stream. As DeepTAM has not been updated for a while there are many compatibility issues with newer drivers, newer Tensor Flow framework and other required libraries. Thus the task is to fix the compatibility issue.}\\
 
 \textbf{Realization} & 
 {Simultaneous Localization And Mapping (\gls{slam}) algorithms are implemented on the free available platform Robot Operating System (\gls{ros}). ORB-\gls{slam} and LSD-\gls{slam} are two specific SLAM methods. These two \gls{slam}s have been modified to get executable program code on \gls{ros}. Several performance tests and a comparison between ORB-\gls{slam} and LSD-\gls{slam} are also part of this work. } \\
@@ -134,21 +134,9 @@ Structure of the flowchart:
 \newline
 \newline
 \begin{center}
-	\includegraphics[width=1\linewidth]{media/images/illustrative_graph.png}
+	\includegraphics[width=1.0\linewidth]{media/images/illustrative_graph.png}
 \end{center}
 } \\
-  
-%\textbf{\mbox{Participation in} competitions, Awards} & 
-%{
-%Participated:
-%\begin{itemize}
-%\item Jugend Innovativ
-%\item ITs Award
-%\item FH Kärnten Maturaprojekt-Wettbewerb
-%\item computer creative wettbewerb
-%\item 120 Sekunden Wettbewerb
-%\end{itemize}
-%} \\
 
 \textbf{\mbox{Accessibility of} \mbox{diploma thesis}} & 
 {HTL Braunau archive, or\newline \url{https://diplomarbeiten.berufsbildendeschulen.at/}} \\
