@@ -8,8 +8,37 @@ learning that attempt to learn in multiple levels, corresponding to different le
 neural networks. The levels in these learned statistical models
 correspond to distinct levels of concepts, where higher-level concepts are defined from lower-level ones, and the same lower-level concepts can help to define many higher-level concepts. For example you can compare lower level concepts with edges and higher level concepts with faces. 
 
+Within the field of machine learning, there are two main types of tasks: supervised, and unsupervised. The main difference between the two types is that supervised learning is done using a ground truth, or in other words, we have prior knowledge of what the output values for our samples should be. Therefore, the goal of supervised learning is to learn a function that, given a sample of data and desired outputs, best approximates the relationship between input and output observable in the data. Unsupervised learning, on the other hand, does not have labeled outputs, so its goal is to infer the natural structure present within a set of data points.
+
 \section{Supervised Learning}
-\section{Semi-Supervised Learning}
+
+In Supervised learning, you train the machine using data which is well "labeled." It means some data is already tagged with the correct answer. It can be compared to learning which takes place in the presence of a supervisor or a teacher.
+
+\subsubsection{\textit{Advantages of supervised learning:}}
+Supervised learning allows you to collect data or produce a data output from the previous experience.
+Helps you to optimize performance criteria using experience
+Supervised machine learning helps you to solve various types of real-world computation problems.
+
 \section{Unsupervised Learning}
+Unsupervised learning is a machine learning technique, where you do not need to supervise the model. Instead, you need to allow the model to work on its own to discover information. It deals with unlabelled data. Unsupervised learning algorithms allow you to perform more complex processing tasks compared to supervised learning. Although, unsupervised learning can be more unpredictable compared with other natural learning deep learning methods.
+
+\subsubsection{\textit{Advantages of unsupervised learning:}}
+Unsupervised machine learning finds all kind of unknown patterns in data.
+Unsupervised methods help you to find features which can be useful for categorization.
+It is taken place in real time, so all the input data to be analyzed and labeled in the presence of learners.
+It is easier to get unlabeled data from a computer than labeled data, which needs manual intervention.
+
+\section{Semi-Supervised Learning}
+Labeled data is often difficult, expensive, or time consuming to obtain.  Meanwhile unlabeled data may be relatively easy to collect, but there have been few ways to use them. Semi-supervised learning addresses this problem by using large amount of unlabeled data, together with the labeled data, to build better classifiers. Because semi-supervised learning requires less human effort and gives higher accuracy, it is of great interest both in theory and in practice.
+
 \section{Applications}
+
+There are many applications for Deep Learning. The following two examples should give an overview about what Deep Learning is capable to achieve. 
+
+\subsubsection{\textit{Recommendation Engine}}
+Netflix, Amazon, Spotify, and many more apps are reliant on their recommendation engines to enhance user experience and provide a better service to their users. Recommendation Engines land in two broad categories: Content-Based and Collaborative Filtering methods. Content-Based refers to quantizing objects in your app as a set of features and fitting regression models to predict the tendencies of a user based on his or her own data. Collaborative Filtering is more difficult to implement, but performs better as it incorporates the behavior of the entire user base to make predictions for single users. Both of these strategies are able to leverage deep networks on massive datasets for productive classification and regression performance.
+
+\subsubsection{\textit{Image Recognition}}
+Image retrieval and classification are very useful if your app utilizes images. Some of the most popular approaches include using recognition models to sort images into different categories, or using auto-encoders to retrieve images based on visual similarity. Image recognition tactics can also be used to segment and classify video data, since videos are really just a time-sequence of images.
+
 

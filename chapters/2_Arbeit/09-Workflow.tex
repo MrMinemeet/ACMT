@@ -462,26 +462,218 @@ The result when running the LSD-\gls{slam} is a 3D map which contains many dots 
 % ---------------------------------------------------
 % DeepTAM
 \section{DeepTAM\authorB}
-In the following section the process of getting DeepTAM to run will be explained. Also the Problems of our workflow will be listed.
+In the following section the errors that occurred when trying to get DeepTAM to run will be listed alongside with the solutions.
 
-\subsection{Errors when building from source original source}
+\subsection{Errors:}
 
-The first attempt was to work with Ubuntu 16.04 and Python3, following the instructions given by Uni-Freiburg. At first a virtual environment manager needed to be installed with pip3(a package manager for Python3). Here pew is used and installed. Afterwards a new environment is created and entered. These are the commands:  
-
+Eigen/Core not found
 \begin{lstlisting}[language=bash]
-    pip3 install pew
-    pew new deeptam
-    pew in deeptam
+#### Error Message
+
+fatal error: Eigen/Dense: No such file or directory
+compilation terminated.
+
+#### Solution
+sudo apt-get install libeigen3-dev`
+sudo apt install python3-minieigen ` after that with pip3 again
 \end{lstlisting}
 
-The next step was to install tensorflow(\gls{tf}), minieigen and scikit-image, also with pip3. Here the first error occurred. The error is that during the installation of minieigen Eigen/Core cannot be found. This problem can be worked around with the following commands.
-
+Boost/Python.hpp
 \begin{lstlisting}[language=bash]
-    sudo apt-get install libeigen3-dev
-    sudo apt-get install python3-minieigen 
-    sudo apt-get install libboost-all-dev
+#### Error Message
+
+fatal error: Boost/Python.hpp: No such file or directory
+compilation terminated.
+
+#### Solution
+
+sudo apt-get install libboost-all-dev
 \end{lstlisting}
 
-After these commands minieigen can be installed with pip3. The next step is to clone and build lmbspecialops. lmbspecialops is a collection of tensorflow ops. The ops focus on networks for predicting depth and camera motion but can also be useful for other tasks. 
+startsWith(...)
+\begin{lstlisting}[language=bash]
+#### Error Message
 
-\subsection{Errors when building with Script}
+data has no method called startsWith()
+
+#### Solution
+comment the functions out
+\end{lstlisting}
+
+`libcublas.so` not found
+\begin{lstlisting}[language=bash]
+#### Error Message
+
+fatal error: libcublas.so.8.0: No such file or directory
+
+#### Solution
+cmake needs a version that is installed
+
+sudo apt install nvidia-cuda-toolkit
+\end{lstlisting}
+
+GCC versions later than 6 not supported
+\begin{lstlisting}[language=bash]
+#### Error Message
+
+error: #error -- unsupported GNU version! gcc versions later than 6 are not supported!
+
+##### Solution
+Start cmake with a parameter to use older version that is installed(install an older if not present)
+I tested it on 4.8 and it worked. Versjk  5.5 was buggy and I'd have had to compile 5.4 on my own.
+`cmake -D CUDA_NVCC_FLAGS="-ccbin gcc-4.8" ..`
+\end{lstlisting}
+
+Tensorflow not found
+\begin{lstlisting}[language=bash]
+#### Error Message
+
+Module Tensorflow not found
+
+#### Solution
+* reinstall Tensorflow & Tensorflow-GPU
+* make environment with pyhton3 `mkvirtualenv -p /usr/bin/python3.6 --clear DeepTAM`
+\end{lstlisting}
+
+Wrong CMAKE version when compiling `lmbspecialops`
+This error already has been fixed from uni-freiburg and posted on both issues.
+\begin{lstlisting}[language=bash]
+#### Error Message
+
+Traceback (most recent call last):
+  File "example_basic.py", line 102, in <module>
+    main()
+  File "example_basic.py", line 72, in main
+    tracker_core = TrackerCore(tracking_module_path,checkpoint,intrinsics)
+  File "/home/aadc/deeptam/tracking/python/deeptam_tracker/tracker.py", line 231, in __init__
+    self._tracking_mod = load_myNetworks_module_noname(self._tracking_module)
+  File "/home/aadc/deeptam/tracking/python/deeptam_tracker/utils/helpers.py", line 44, in load_myNetworks_module_noname
+    return load_myNetworks_module(module_name, path_to_myNetworks)
+  File "/home/aadc/deeptam/tracking/python/deeptam_tracker/utils/helpers.py", line 32, in load_myNetworks_module
+    return importlib.import_module('.'+myNetworks_name, module_name)
+  File "/home/aadc/.virtualenvs/DeepTAM/lib/python3.5/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 986, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 969, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 958, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 673, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 665, in exec_module
+  File "<frozen importlib._bootstrap>", line 222, in _call_with_frames_removed
+  File "../python/deeptam_tracker/models/networks.py", line 2, in <module>
+    from .blocks import *
+  File "../python/deeptam_tracker/models/blocks.py", line 1, in <module>
+    from .helpers import *
+  File "../python/deeptam_tracker/models/helpers.py", line 1, in <module>
+    import lmbspecialops as sops
+  File "/home/aadc/lmbspecialops/python/lmbspecialops.py", line 27, in <module>
+    lmbspecialopslib = tf.load_op_library(_lib_path)
+  File "/home/aadc/.virtualenvs/DeepTAM/lib/python3.5/site-packages/tensorflow/python/framework/load_library.py", line 61, in load_op_library
+    lib_handle = py_tf.TF_LoadLibrary(library_filename)
+tensorflow.python.framework.errors_impl.NotFoundError: /home/aadc/lmbspecialops/build/lib/lmbspecialops.so: undefined symbol: _ZTIN10tensorflow8OpKernelE
+W0703 13:59:34.039927 140179251631872 deprecation_wrapper.py:119] From /home/aadc/deeptam/tracking/python/deeptam_tracker/tracker.py:242: The name tf.reset_default_graph is deprecated. Please use tf.compat.v1.reset_default_graph instead.
+
+#### Solution
+`https://github.com/lmb-freiburg/demon/issues/26`
+
+`https://github.com/lmb-freiburg/lmbspecialops/issues/3`
+\end{lstlisting}
+
+there was an error in verifying the lgenfe output!
+\begin{lstlisting}[language=bash]
+#### Error Message
+
+Error: Internal Compiler Error (codegen): "there was an error in verifying the lgenfe output!"
+
+#### Solution
+run make command with only one thread
+`make -j1`
+and try another gcc version in the cmake argument
+\end{lstlisting}
+
+Undefinded Symbol
+\begin{lstlisting}[language=bash]
+#### Error Message
+
+tensorflow.python.framework.errors_impl.NotFoundError: /home/adas/DeepTAM/lmbspecialops/build/lib/lmbspecialops.so: undefined symbol: _ZTIN10tensorflow8OpKernelE
+
+#### Solution
+not a good one found yet, just try intalling it from beginning again.
+Sry but that but it helped for me
+\end{lstlisting}
+
+mathfunction.hpp not found
+\begin{lstlisting}[language=bash]
+#### Error Message
+```
+/home/adas/.virtualenvs/DeepTAM/lib/python3.6/site-packages/tensorflow/include/unsupported/Eigen/CXX11/../../../Eigen/Core:59:34: fatal error: math_functions.hpp: No such file or directory
+     #include <math_functions.hpp>
+
+#### Solution
+For cuda 9.1 replace math_functions.hpp with cuda_runtime.h
+This change should happen in a `Core` file which is in your `.virtualenv` folder
+
+-    #include <math_functions.hpp>
+
++    #include <cuda_runtime.h>
+\end{lstlisting}
+
+libcublas.so.8.0 cannot open shared object
+\begin{lstlisting}[language=bash]
+#### Error Message
+
+ImportError: libcublas.so.8.0: cannot open shared object file: No such file or directory
+
+#### Solution
+Install the right version of Cuda Toolkit 8.0 for your system from this nvidia website
+https://developer.nvidia.com/cuda-80-ga2-download-archive
+>[Credits](https://stackoverflow.com/questions/47200662/importerror-libcublas-so-8-0-cannot-open-shared-object-file-no-such-file-or-d#47200772)
+\end{lstlisting}
+
+Cuda Toolkit 8.0 -> `InstallUtils.pm`
+\begin{lstlisting}[language=bash]
+In log:
+
+Can't locate InstallUtils.pm in @INC (you may need to install the InstallUtils module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.26.1 /usr/local/share/perl/5.26.1 /usr/lib/x86_64-linux-gnu/perl5/5.26 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl/5.26 /usr/share/perl/5.26 /usr/local/lib/site_perl /usr/lib/x86_64-linux-gnu/perl-base) at ./install-sdk-linux.pl line 6.
+```
+### Solution
+
+* unpack `.run` file using the command: `sudo sh ./cuda*.run --tar mxvf`
+* copy unpacked file `InstallUtils.pm` to `/usr/lib/x86_64-linux-gnu/perl-base`
+* enter command in terminal: `export $PERL5LIB`
+>[Credits](https://askubuntu.com/a/1087842/978055)
+\end{lstlisting}
+
+Cuda Toolkit 8.0 -> `InstallUtils.pm`
+\begin{lstlisting}[language=bash]
+In log:
+
+Can't locate InstallUtils.pm in @INC (you may need to install the InstallUtils module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.26.1 /usr/local/share/perl/5.26.1 /usr/lib/x86_64-linux-gnu/perl5/5.26 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl/5.26 /usr/share/perl/5.26 /usr/local/lib/site_perl /usr/lib/x86_64-linux-gnu/perl-base) at ./install-sdk-linux.pl line 6.
+```
+### Solution
+
+* unpack `.run` file using the command: `sudo sh ./cuda*.run --tar mxvf`
+* copy unpacked file `InstallUtils.pm` to `/usr/lib/x86_64-linux-gnu/perl-base`
+* enter command in terminal: `export $PERL5LIB`
+>[Credits](https://askubuntu.com/a/1087842/978055)
+\end{lstlisting}
+
+Conv2DCustomBackpropInputOp only supports NHWC
+\begin{lstlisting}[language=bash]
+#### Error Message
+
+InvalidArgumentError (see above for traceback): Conv2DCustomBackpropInputOp only supports NHWC.
+	 [[Node: net_F1/flowdepth/upsample_flow3to2/upconv/conv2d_transpose = Conv2DBackpropInput[T=DT_FLOAT, data_format="NCHW", padding="SAME", strides=[1, 1, 2, 2], use_cudnn_on_gpu=true, _device="/job:localhost/replica:0/task:0/device:CPU:0"](net_F1/flowdepth/upsample_flow3to2/upconv/stack, net_F1/flowdepth/upsample_flow3to2/upconv/kernel/read, net_F1/flowdepth/predict_flow3/conv2/BiasAdd)]]
+
+#### Solution
+Something with TF and GPU not getting detected, no solution found yet
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
