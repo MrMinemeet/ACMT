@@ -5,7 +5,7 @@
 % USED HARDWARE
 \section{Used Hardware\authorA}
 For video capturing a \href{https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/}{\textit{Raspberry Pi 3B+}} of the Raspberry Pi Foundation with a \href{https://www.raspberrypi.org/products/camera-module-v2/}{\textit{Pi Camera V2}} or a \href{https://www.sainsmart.com/products/wide-angle-fov160-5-megapixel-camera-module-for-raspberry-pi}{\textit{Pi Wide Angle Lens Camera}} are used. The Raspberry Pi sends the video feed to a separate more power full PC over WiFi using a Python3 script \ref{ref:streamPythonScript} since the scripts that are available use \gls{rtsp} (Real Time Streaming Protocol) had a few problems. \newline
-For running the DeepTAM a \href{https://support.lenovo.com/us/en/solutions/pd005642}{\textit{Lenovo Think-Station S20}} is used since it requires a dedicated graphics card. Since the DeepTAM is a bit tricky to get it working a \href{https://www.lenovo.com/de/de/laptops/thinkpad/w-series/w550s/}{\textit{Lenovo W550s}} was used as a secondary machine to not loose any progress. For more intense work a server access at the Johannes Kepler University was supplied to work on their system which contains Nvidia Quadro and Nvidia GTX graphics cards. \newline
+For running the DeepTAM a \href{https://support.lenovo.com/us/en/solutions/pd005642}{\textit{Lenovo Think-Station S20}} is used since it requires a dedicated graphics card. Since the DeepTAM is a bit tricky to get it working a \href{https://www.lenovo.com/de/de/laptops/thinkpad/w-series/w550s/}{\textit{Lenovo W550s}} was used as a secondary machine to increase the working progress. For more intense work a server access at the Johannes Kepler University was supplied to work on their system which contains Nvidia Quadro and Nvidia GTX graphics cards. \newline
 As the work is based around implementing it on the Audi Autonomous Driving Cup (\gls{aadc}) car a cheaper remote controlled model car was borrowed to test the algorithms in an live environment that is not based on a dataset. The \gls{aadc} car was not used since it has very much power and is pretty expensive.\newline
 \begin{figure}[h]
 	\centering
@@ -16,7 +16,7 @@ As the work is based around implementing it on the Audi Autonomous Driving Cup (
 \end{figure}
 
 \subsection{Raspberry Pi}
-The Raspberry Pi\texttrademark \footnote{Raspberry Pi is a trademark} is running \href{https://www.raspberrypi.org/downloads/raspbian/}{Raspbian Buster} since it is a well optimized version of Debian for the mini computer and only required to be able to execute a Python script to send the raw video feed over http to the the processing device.\newline
+The Raspberry Pi\texttrademark \footnote{Raspberry Pi is a trademark} is running \href{https://www.raspberrypi.org/downloads/raspbian/}{Raspbian Buster} since it is a well optimized version of Debian for the mini computer and only required to be able to execute a Python script to send the raw video feed using the Hypertext Transfer Protocol (\gls{http}) to the processing device.\newline
 
 \subsection{PC}
 The Think-Station and the laptop are running Kubuntu 18.04, which is basically Ubuntu but has a GUI that's a more like Windows and is supported until May 2023. \newline
@@ -28,7 +28,7 @@ The Laptop has a four core Intel i7 and 8GB of RAM built in.
 % USED SOFTWARE
 \section{Used Software\authorA}
 \textbf{\underline{ADTF}} \newline
-At first Ubuntu 16.04 with Automotive Data and Time-Triggered Framework (\gls{adtf}) was used since it's the recommended environment by the \gls{aadc} car manufacturer DigitalWerk. There were many compatibility ans stability issues and it is very difficult to get into the whole system as it's not very beginner friendly. After trying to get the basics of \gls{adtf} working it was clear that switching to ROS might be better. The main problems with \gls{adtf} are, that \gls{adtf} isn't running very stable, requires certain packages to be in a non-standard folders and not having them in the regular location and it is very difficult to work with when using it for the first time.
+At first Ubuntu 16.04 with Automotive Data and Time-Triggered Framework (\gls{adtf}) was used since it's the recommended environment by the \gls{aadc} car manufacturer DigitalWerk. There were many compatibility an stability issues and it is very difficult to get into the whole system as it's not very beginner friendly. After trying to get the basics of \gls{adtf} working it was clear that switching to ROS might be better. The main problems with \gls{adtf} are, that \gls{adtf} isn't running very stable, requires certain packages to be in a non-standard folders and not having them in the regular location and it is very difficult to work with when using it for the first time.
 
 \textbf{\underline{ROS}} \newline
 Running ROS Melodic on Kubuntu 18.04 was pretty straight forward. The instructions on the \href{https://wiki.ros.org/melodic/Installation}{ROS website} \cite{installros} are very clear and can be directly copied without issues. The principle of the workspace is also easy to understand. In the source folder the modules get put in and when compiling the modules automatically generates a setup file to use them. Usage is very easy as the framework already does a lot in the background and using nodes is nearly always setting input and output with a few parameters.
@@ -47,7 +47,7 @@ Running ROS Melodic on Kubuntu 18.04 was pretty straight forward. The instructio
 % ---------------------------------------------------
 % Setup
 \section{Setup\authorA}
-As the PC and laptop are not the best idea to run around with, a Raspberry Pi is used instead to stream the video over WiFi to the PC/laptop which is connected to the router over LAN. This makes the camera setup very portable as the pi, camera and powerbank are packed together and only weighs around 500g. The PC can be placed somewhere where and just processing the received video signal.\newline
+As the PC and laptop are not the best idea to run around with, a Raspberry Pi is used instead to stream the video over WiFi to the PC/laptop which is connected to the router over LAN. This makes the camera setup very portable as the pi, camera and powerbank are packed together and only weighs around 500g. The PC can be placed somewhere where in the room. The PC processes the received video signal.\newline
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.8\textwidth]{./media/images/PiSetup.png}
@@ -69,7 +69,7 @@ To use a camera on a Raspberry Pi the camera serial interface (\gls{csi}) needs 
 \end{figure}
 
 \subsection{Python Script}\label{ref:streamPythonScript}
-In listing \ref{code:videostreamMain} at first a \textit{piCamera} instance with the name \textit{cam} is created. As parameters the resolution gets set to \textit{1280x720} pixels and the frame rate is set to \textit{30} frames per second (\gls{fps}). If needed the image can be rotated, e.g the camera is mounted upside down. When starting the camera a output and format are expected. For the output a separate class is used which sets how and when a new frame can be published. The \textit{mjpg} video codec is chosen as a pack for getting MPEG-streams already exists in \gls{ros} and it's not power hungry when running it on the Raspberry Pi as the hardware supports it \cite{raspberrypi3bplusspecs}. \newline
+In listing \ref{code:videostreamMain} at first a \textit{piCamera} instance with the name \textit{cam} is created. As parameters the resolution gets set to \textit{1280x720} pixels and the frame rate is set to \textit{30} frames per second (\gls{fps}). If needed the image can be rotated, e.g the camera is mounted upside down. When starting the camera an output and format are expected. For the output a separate class is used which sets how and when a new frame can be published. The \textit{mjpg} video codec is chosen as a pack for getting MPEG-streams already exists in \gls{ros} and it's not power hungry when running it on the Raspberry Pi as the hardware supports it \cite{raspberrypi3bplusspecs}. \newline
 After the camera \enquote{recording} has started successfully the server is started to make the stream accessible to other devices. The server runs until the user closes the script using \textit{CTRL + C}. After closing the server the \textit{finally} block gets called, where the camera \enquote{recording} is stopped so that other programs can use the camera again.\newline
 \lstinputlisting[language=Python, firstline=77, lastline=91,caption={Main Function of Camera Feed},label={code:videostreamMain}]{./media/code_snippets/HTTPCamStream.py}
 
@@ -86,7 +86,7 @@ The behavior when a new image from the pi camera is ready to send is defined in 
 For receiving the stream on the PC or Laptop the existing Video-Stream-OpenCV Node is used. Video-Stream-OpenCV is designed to publish videos in the \gls{ros} network which are received from different sources, e.g. USB-cameras, video-files, network cameras and video-streams \cite{videostreamopencv}.
 
 \subsection{MJPG-Stream receiver}
-To automate the startup procedure of the node a roslaunch file is used. The lauchfile automatically starts the node and passes the required parameters.\newline
+To automate the startup procedure of the node a roslaunch file is used. The launchfile automatically starts the node and passes the required parameters.\newline
 The launchfile shown in \ref{code:mjpgstreamreceiverlaunch} published the received image stream on a topic called \textit{camera}. The video stream provider are the Raspberry Pi's IP-address, port and \textit{/stream.mjpg} directory. 30 \gls{fps} are used since they provide a good balance between amount of traffic and amount of detail in the movement.\newline
 \lstinputlisting[language=XML, firstline=3, lastline=14, caption={MJPG-Stream receiver Launch file},label={code:mjpgstreamreceiverlaunch}]{./media/code_snippets/mjpg-stream.launch}
 
@@ -118,7 +118,7 @@ This command opens a window which shows the live image feed from the camera and 
   	\label{img:cameracalibration}
 \end{figure} \newline
 
-When the node has enough reference images the computing of the parameters can start. The duration of the calculations depends on the CPU and how many images have been taken. But most likely it will take around 5 Minutes until the computing is finished. The output data contains two formats of the same data which will look like something like shown in figure \ref{code:calibrationyaml}. The output files are normally compatible with all applications without any issues.\newline
+When the node has enough reference images the computing of the parameters can start. The duration of the calculations depends on the CPU and how many images have been taken. But most likely it will take around 5 minutes until the computing is finished. The output data contains two formats of the same data which will look like something like shown in figure \ref{code:calibrationyaml}. The output files are normally compatible with all applications without any issues.\newline
 \lstinputlisting[language=XML, firstline=1, lastline=14, caption={Calibration file},label={code:calibrationyaml}]{./media/code_snippets/calibration.yaml}
 
 
@@ -149,7 +149,7 @@ These points are helpful to achieve good results.
 Integrating ORB-SLAM2 \ref{ref:orbslam} is pretty straight forward since there is already a \gls{ros} version of it which is very well maintained by \textbf{Lennart Haller} on behav of \textit{appliedAI-Initiative} on \href{https://github.com/appliedAI-Initiative/orb_slam_2_ros}{GitHub} \cite{orbslam2rosgithub}. It just needs to be cloned into the \textit{src} folder of the \gls{ros}-workspace and compiled using the \textit{catkin build} command.When building the packs is finished the generated setup-file has to be sourced. The file is located under \textit{workspace/devel/setup.sh} and can be sourced using the \textit{source setup.sh} command. The \textsc{source}-command is often used to set up variables or commands that are not loaded in the terminal by default. After sourcing the setup all new types of commands that are added by the nodes are available.
 
 \subsection{Calibration file}\label{ref:calibrationorbslam}
-Before using the ORB-SLAM the calibration file needs to be created in \textit{src/orb\_slam2/config/config.yaml}. For a baseline the config from another mono-camera can be copied. The calibration part looks like shown in \ref{code:orbslamconfig} and thus the config that the calibration tool generated needs to be converted manually. In the camera\_matrix the values are the following:\newline
+Before using the ORB-SLAM the calibration file needs to be created in the ORB-\gls{slam}s config folder with the name \textit{config.yaml}. For a baseline the config from another mono-camera can be copied. The calibration part looks like shown in listing \ref{code:orbslamconfig} and thus the config that the calibration tool generated needs to be converted manually. In the camera\_matrix the values are the following:\newline
 \begin{lstlisting}[language=XML,caption={Matrix listing},label={code:calibrationmatrix}]
 	  	[camera.fx, 0, camera.cx, 0, camera.fy, camera.cy, 0, 0, 1]
 \end{lstlisting}
@@ -232,7 +232,7 @@ When viewing the map in a programm like RViz \ref{rviz} it should look similarly
 % ---------------------------------------------------
 % Running LSD-SLAM
 \section{Running LSD-SLAM\authorA}
-Running the LSD-SLAM is not as straight forward as it is on the ORB-SLAM \ref{ref:runningmonocularorbslam}. The implementation of the LSD-SLAM is made to use it with \gls{ros} out of the box but the \href{https://github.com/tum-vision/lsd_slam}{original version} \cite{githublsdslamtum} by the Computer Vision Group at the Technical University of Munich was not updated in the past 5 years and such had some problems when running it on a newer version of \gls{ros} and Ubuntu. Therefor an more up-to-date version by Kevin George was used where he added support for newer versions of libraries and fixed some bugs. Even though the \href{https://github.com/kevin-george/lsd_slam}{fork by Kevin George} \cite{kevingeorgelsdslam} was updated 2 Years ago there were still some bugs and other problems. So a fork was created with the fixes to address the problems that where in Kevin George's Repository. The fork includes bug fixes to run LSD-SLAM on \gls{ros}-Melodic and Ubuntu 18.04 pretty much out of the box.\newline
+Running the LSD-SLAM is not as straight forward as it is on the ORB-SLAM \ref{ref:runningmonocularorbslam}. The implementation of the LSD-SLAM is made to use it with \gls{ros} out of the box but the \href{https://github.com/tum-vision/lsd_slam}{original version} \cite{githublsdslamtum} by the Computer Vision Group at the Technical University of Munich was not updated in the past 5 years and such had some problems when running it on a newer version of \gls{ros} and Ubuntu. Therefor an more up-to-date version by Kevin George was used where he added support for newer versions of libraries and fixed some bugs. Even though the \href{https://github.com/kevin-george/lsd_slam}{fork by Kevin George} \cite{kevingeorgelsdslam} was updated 2 years ago there were still some bugs and other problems. So a fork was created with the fixes to address the problems that where in Kevin George's Repository. The fork includes bug fixes to run LSD-SLAM on \gls{ros}-Melodic and Ubuntu 18.04 pretty much out of the box.\newline
 The \href{https://github.com/MrMinemeet/lsd_slam}{new fork} \cite{alexandervoglspergerlsdslam} contains implementation to use \textsc{Eigen v3.2.5} that doesn't need to be installed, a special version of General Graph Optimization (\gls{g2o}) and a \textsc{CSPARSE}-directory path fix.\newline
 
 % Listing of errors when building LSD-SLAM from original source
@@ -265,7 +265,7 @@ The error shown in \ref{error:cannotfindlcsparse} most likely accuress when catk
 collect2: error: ld returned 1 exit status
 \end{lstlisting}
 To fix it the paths where the required files are, have to be included in the \textit{CMakeList.txt} file which can be found in the source folder. Add the block shown in \ref{code:csparseincludedir} at the top of the file and replace \textsc{csparse} and \textsc{cxsparse} with \textsc{\$\{CSPARSE\_INCLUDE\_DIR\}} at the line where \textit{target\_link\_libraries} is adding the links to libraries.\newline
-\begin{lstlisting}[label={error:csparseincludedir}]
+\begin{lstlisting}[label={code:csparseincludedir}]
 find_path(CSPARSE_INCLUDE_DIR NAMES cs.h
   PATHS
   /usr/include/suitesparse
@@ -324,7 +324,7 @@ Eigen::Map<const Eigen::Matrix<double, 7 ,1>> v(m);
 
 
 % Could not find package configuration file provided by "Eigen"
-\subsubsection{Couldn not find package configuration file provided by \textsc{Eigen}}
+\subsubsection{Could not find package configuration file provided by \textsc{Eigen}}
 When receiving a error message that states something similiar to the message below it is most likely because of a naming difference in the \textit{CMakeList.txt}.\newline
 \begin{lstlisting}[language=bash]
 lsd_slam/lsd_slam_viewer/CMakeLists.txt:30 (find_package):
@@ -418,7 +418,7 @@ These points are helpful to get good results and some to keep in mind when runni
     At least 30 \gls{fps} or more should be delivered to the \gls{slam} to get good results when moving.
     
     \item \underline{Global shutter} \newline
-    The camera should have a global shutter where the the image is taken all at once. Rolling shutters which scan the image from top to bottom \cite{globalrollingshutter}. This might lead to changes while the scan is running and thus generating false information. This wrong information then leads to inferior results.
+    The camera should have a global shutter where the the image is taken all at once. Rolling shutters which scan the image from top to bottom. This might lead to changes while the scan is running and thus generating false information. This wrong information then leads to inferior results.
     
     \item \underline{Field of View} \newline
     A camera lens that has a wide field of view (\gls{fov}) is recommended to get a bigger area that the camera can capture and thus is able to fetch more information. A lens with \textsc{130\degree} or more is recommended.
@@ -448,7 +448,7 @@ When looking in RQt \ref{rqt} it shows that the LSD-\gls{slam} has connected to 
 \end{figure}
 
  \section{Results with LSD-SLAM}
-The result when running the LSD-\gls{slam} is a 3D map which contains many dots in space which represent a edges, surfaces and other details. Compared to the ORB-\gls{slam} results \ref{ref:orbslamresults} the LSD-\gls{slam} produces a more detailed map in terms of amount of points and how they are laid out. When looking into a visualization programm like RViz \ref{rviz} it the map should look similar to \ref{img:lsdslamresult} which shows the more detailed map due to more information gathered by the \gls{slam}.
+The result when running the LSD-\gls{slam} is a 3D map which contains many dots in space which represent a edges, surfaces and other details. Compared to the ORB-\gls{slam} results \ref{ref:orbslamresults} the LSD-\gls{slam} produces a more detailed map in terms of amount of points and how they are laid out. When looking into a visualization programm like RViz \ref{rviz} the map should look similar to \ref{img:lsdslamresult} which shows the more detailed map due to more information gathered by the \gls{slam}.
 \begin{figure}[h]
 	\centering
 	\includegraphics[height=0.7\textwidth]{./media/images/lsdslamresult.png}

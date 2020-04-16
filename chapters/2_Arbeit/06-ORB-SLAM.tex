@@ -18,7 +18,7 @@ ORB-SLAM2 is based on ORB-SLAM and was inter alia developed by Raúl Mur-Artal w
 The \gls{slam} is made out of multiple blocks which all handle a different type of operation. These operations range from extracting the keypoints to localization.
 
 \subsection{Extracting Keypoints}
-The \gls{slam} uses a feature-based method. This means that it extracts features on prominent keypoints throughout the image input. These feature information is then distributed to all operations which handle them independently from the camera type. \cite{orbslam2} \newline\newline
+The \gls{slam} uses a feature-based method. This means that it extracts features on prominent keypoints throughout the image input. These feature information is then distributed to all operations which handle them independently from the camera type \cite{orbslam2}.  \newpage
 
 
 This is how finding these keypoints works on different camera types:
@@ -26,14 +26,14 @@ This is how finding these keypoints works on different camera types:
     \item \underline{Stereo Image} \newline
     For a stereo camera setup the keypoints get extracted from the image using a survival of the fittest process, were the most prominent points stay until a threshold is reached. This is done for both images separately and then the left keypoints are searched on the right image. Then the found points get compared to the original ones that where found on the right side
     \item \underline{RGB-D Image} \newline
-    On a \gls{rgbd} camera keypoints get extracted using prominent keypoints and then calculating the approximate position using the depth information from the information from the depth sensor.
+    On a \gls{rgbd} camera keypoints get extracted using prominent keypoints and then calculating the approximate position using the depth information of from the depth sensor.
     \item \underline{Monocular Image} \newline
     On a Monocular image the approximate position gets triangulated by using multiple images. The disadvantage is that they don't provide a scale information and only do rotational and transnational movement estimations.
 \end{itemize}
 
 \subsection{Loop-closing and Bundle Adjustments}
 Loop-closing and bundle adjustments are performed in two steps. First the loop-closing will happen when the system detects overlapping environments where the system changes scaling to reconnect certain parts as scale drifting will occur on monocular cameras.\newline
-Second step is the bundle adjustment, which gets executed after a successful loop-closing, where the system tries to optimize all keypoints and keyframes using the Levenberg-Marquardt method (alternative to Gauss-Newton method) \cite{LevenbergMarquardMethod}. This optimization like seen in \ref{img:loopclosing} tries to adjust the map in a way it makes sense again.  Also the camera orientation and position will be optimized to compensate errors in tracking. All the bundle adjustment is done in a separate thread since this is a more computational task.\newline
+Second step is the bundle adjustment, which gets executed after a successful loop-closing, where the system tries to optimize all keypoints and keyframes using the Levenberg-Marquardt method (alternative to Gauss-Newton method) \cite{LevenbergMarquardMethod}. Figure \ref{img:loopclosing} shows the optimization process. It tries to adjust the map in a way it makes sense again.  Also the camera orientation and position will be optimized to compensate errors in tracking. All the bundle adjustment is done in a separate thread since this is a more computational task.\newline
 When finished, the updated and optimized keyframes and keypoints get merged into the original keyframes and keypoints \cite{orbslam2}.\newline
 \begin{figure}[h!]
 	\centering
@@ -44,9 +44,9 @@ When finished, the updated and optimized keyframes and keypoints get merged into
 \end{figure}
 
 \subsection {Localization}
-When an area has been mapped well in the past the \textit{Localization Mode} can be turned on which deactivates the Local Mapping and the Loop Closing thread and this saving computing power.
+When an area has been mapped well in the past the \textit{Localization Mode} can be turned on which deactivates the Local Mapping and the Loop Closing thread.
 Locating is done by continuously comparing the previous points with the current points of the image. This works when an area is unmapped but drifting might add up.
-Matching the current points with the one on the map will ensure that it is drift-free \cite{orbslam2}. There are a few points that are pretty important to keep in mind to achieve good results. The points can be viewed at \ref{ref:orbslamgetgoodresults}.
+Matching the current points with the one on the map will ensure that it is drift-free \cite{orbslam2}. There are a few points that are pretty important to keep in mind to achieve good results. The points can be viewed in section \ref{ref:orbslamgetgoodresults}.
 
 \subsection{Input/Output}
 \textbf{Input Data:} rectified Monochrome/Color images\newline
