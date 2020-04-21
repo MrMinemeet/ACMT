@@ -3,7 +3,7 @@
 
 \section{What is a Artificial Neural Networks?}
 
-  \textbf{A}rtificial \textbf{N}eural \textbf{N}etworks (ANN) are inspired by biological neural networks that constitute animal brains. Important to notice is that they are not faithful models of biologic neural or cognitive phenomena. In fact most of these models are more closely related to mathematical and/or statistical models (For Example: clustering algorithms). Clustering algorithms  task is to group a set of objects in such a way that objects in the same group (called a cluster) are more similar (in some sense) to each other than to those in other groups (clusters). Such systems "learn" to perform tasks by considering examples, generally without being programmed with task-specific rules. 
+  \textbf{A}rtificial \textbf{N}eural \textbf{N}etworks (ANN) are inspired by biological neural networks that constitute animal brains. Important to notice is that they are not faithful models of biologic neural or cognitive phenomena. In fact most of these models are more closely related to mathematical and/or statistical models, for example: clustering algorithms. A clustering algorithm groups a set of objects in such a way that objects in the same group (called a cluster) are more similar (in some sense) to each other than to those in other groups (clusters). Such systems "learn" to perform tasks by considering examples, generally without being programmed with task-specific rules. 
  
 \section{Areas of Application}
 
@@ -12,14 +12,14 @@
  
 \section{Components of an ANN}
 
-Simplified a ANN consists of neurons, connection and the weight associated with them, the propagation function, a loss function and a bias. The following topics will give you an introduction what these components represent and how they interact. 
+Simplified an ANN consists of neurons, connection and the weight associated with them, the propagation function, a loss function and a bias. The following sections will give you an introduction what these components represent and how they interact. 
 
 \subsection{Neurons}
 
-Neurons are elementary units in an ANN. A neuron gets one ore more inputs and depending on the value of the inputs the output is set to a value between 0 and 1. A neuron can get its inputs from other neurons or, if its at the beginning, from the source of the data that needs to be processed. Depending on the application the ANN is needed for they are placed in different structures.
+Neurons are elementary units in an ANN. A neuron has one ore more inputs and depending on the input values the output value is between 0 and 1. A neuron can get its inputs from other neurons or, if its at the beginning of the network, from an external source. The application determines the structure of the ANN.
 
 
-\subsection{Connection and weights}
+\subsection{Connections and weights}
 
 Neurons are connected to neurons in the next layer. It depends on the structure which neurons are connected with which neurons in the next layer. The weights characterize how important a connection between neurons is. 
 
@@ -36,7 +36,7 @@ A neuron, we call it Y for this example, has three neurons connected to it as in
 
 \subsection{Propagation function, activation function and Bias}
 
-This is a function which takes the Inputs of a neuron, the weight of these connections and the bias and adds them up. The resulting value is the processed by the activation function which sets the output. One of the most common activation function is the sigmoid function because it is not a step function which means the output does not  change instantaneously. That is important for the training algorithm because with that the output of a neuron can not only be 1 or 0. It can be any number between 1 and 0 and give an answer for how certain it is. Therefore the training will be easier because it is easier to find out in which directions and how much the weights should be changed. The bias is a Neuron which has no Inputs. A bias is used to shift the decision boundary to the left or right.
+The propagation function takes the input values of a neuron, the weight of each connections and the bias and adds them up. The resulting value is processed by the activation function which sets the output. One of the most common activation function is the sigmoid function, because it is not a step function which means the output does not  change instantaneously. That is important for the training algorithm because with that the output of a neuron can not only be 1 or 0. It can be any number between 1 and 0 and it gives an answer for how certain it is. Therefore the training will be easier because it is easier to find out in which directions and how much the weights should be changed. The bias is a neuron which has no inputs. A bias is used to shift the decision boundary to the left or right.
 
 \section{Organization}
 
@@ -47,15 +47,16 @@ A artificial neural network can be organized in many different ways.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.7\textwidth]{./media/images/feed_forward_neural_network.png}
-  	\caption{Feed forward network}
+  	\caption{Feed forward network
+  	\\Source: https://tinyurl.com/ydzdtqqx}
   	\label{ffNN}
 \end{figure}
 
-The following picture demonstrates a feed forward ANN .There are a variable number of hidden layers depending on the purpose of the neural network. Nothing in the hidden layer is visible. 
+Fig. 3.2 demonstrates a feed forward ANN .There are a variable number of hidden layers depending on the purpose of the neural network. Nothing in the hidden layer is visible. 
 
 \subsection{CNN}
 
-Convolution Neural Network (CNN) is the most important Network organization for this task. It is based on the human visual cortex and are optimal for image and video recognition. The components of a CNN are a series of convolution and sub-sampling layers followed by a fully connected layer and a normalizing layer.
+Convolution Neural Network (CNN) is the most important network organization for this task. It is based on the human visual cortex and is optimal for image and video recognition. The components of a CNN are a series of convolution and sub-sampling layers followed by a fully connected layer and a normalizing layer.
 
 How a CNN works will be explained in the following example. The same example like in "Review of Deep Learning Algorithms and Architectures"\cite{exampleCNN} will be used
 \begin{figure}[h]
@@ -72,7 +73,7 @@ Progressively more refined feature extraction at every layer is performed by the
 
 Encoder-Decoder-Based networks are networks, which try to reconstruct their own input. You construct the network so that it reduces the input size by using one or more hidden layers, until it reaches a reasonably small hidden layer in the middle. As a result your data has been compressed (encoded) into a few variables. From this hidden representation the network tries to reconstruct (decode) the input again.
 
-In order to do a good job at reconstructing the input the network has to learn a good representation of the data in the middle hidden layer. This can be useful for dimensionality reduction, or for generating new “synthetic” data from a given hidden representation. This is especially important considering that we are trying to construct a 3D Map out of the Camera Input. 
+In order to do a good job at reconstructing the input the network has to learn a good representation of the data in the middle hidden layer. This can be useful for dimensionality reduction, or for generating new “synthetic” data from a given hidden representation. This is especially important considering that we are trying to construct a 3D map out of the camera input. 
 
 
 
